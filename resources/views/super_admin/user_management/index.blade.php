@@ -1,5 +1,20 @@
 @extends('master.layouts')
 @section('content')
+    {{-- notifikasi tindakan --}}
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" data-bs-delay="5000">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            {{ $message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                document.querySelector('.alert').classList.add('fade');
+                document.querySelector('.alert button').click();
+            }, 5000);
+        </script>
+    @endif
+    {{-- end notifikasi --}}
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -23,7 +38,7 @@
             <!-- Info boxes -->
             <!-- /.row -->
             <!-- /.row -->
-            <div class="card">
+            <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">Tabel User</h3>
                     <div class="d-flex justify-content-end align-items-center">
@@ -42,7 +57,7 @@
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Foto</th>
-                                <th style="width: 40px">Action</th>
+                                <th style="width: 225px">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,7 +72,7 @@
                                     <td>{{ $d->role }}</td>
                                     <td><img src="/image/{{ $d->foto }}" width="75px" height="100px"></td>
                                     <td>
-                                        <form action="{{ route('users.destroy', $d->id) }}" method="POST">
+                                        <form class="ml-auto" action="{{ route('users.destroy', $d->id) }}" method="POST">
                                             <a href="{{ route('users.show', $d->id) }}"
                                                 class="btn btn-info btn-square btn-sm">
                                                 <i class="far fa-eye">View</i> </a>

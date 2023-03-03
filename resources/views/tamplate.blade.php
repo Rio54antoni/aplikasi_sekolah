@@ -25,7 +25,7 @@
             <!-- /.row -->
 
 
-
+            {{-- paste disiko kalau untuak isi form e --}}
 
 
             <!-- Main row -->
