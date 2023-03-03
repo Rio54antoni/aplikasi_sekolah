@@ -26,7 +26,7 @@
 
                 <li class="nav-header">Dashboard</li>
                 <li class="nav-item">
-                    <a href="{{ route('users.index') }}" class="nav-link">
+                    <a href="pages/calendar.html" class="nav-link">
                         <i class="fas fa-cog"></i>
                         <p>
                             User Management

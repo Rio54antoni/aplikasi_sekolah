@@ -7,6 +7,7 @@ use App\Http\Controllers\MuridadmController;
 use App\Http\Controllers\OrangController;
 use App\Http\Controllers\StafadmController;
 use App\Http\Controllers\SuperController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout.index');
 Route::middleware(['auth', 'super_admin:admin'])->group(function () {
     Route::group(['prefix' => 'super-admin'], function () {
         Route::get('/index', [SuperController::class, 'index'])->name('super_admin.index');
+        Route::resource('users', UserController::class);
     });
 });
 //akses=kepala
