@@ -55,8 +55,22 @@
                                     <td>{{ $d->nama }}</td>
                                     <td>{{ $d->email }}</td>
                                     <td>{{ $d->role }}</td>
-                                    <td><img src="/image/{{ $d->foto }}" width="100px" height="120px"></td>
+                                    <td><img src="/image/{{ $d->foto }}" width="75px" height="100px"></td>
                                     <td>
+                                        <form action="{{ route('users.destroy', $d->id) }}" method="POST">
+                                            <a href="{{ route('users.show', $d->id) }}"
+                                                class="btn btn-info btn-square btn-sm">
+                                                <i class="far fa-eye">View</i> </a>
+                                            <a href="{{ route('users.edit', $d->id) }}"
+                                                class="btn btn-warning btn-square btn-sm">
+                                                <i class="fas fa-edit">Edit</i>
+                                            </a>
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus data user ini ?')"><i
+                                                    class="fas fa-trash">Hapus</i></button>
+                                        </form>
 
                                     </td>
                                 </tr>

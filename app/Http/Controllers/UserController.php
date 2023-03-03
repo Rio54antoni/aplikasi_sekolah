@@ -52,7 +52,7 @@ class UserController extends Controller
         ];
         return view('super_admin.user_management.create', compact('role'));
 
-        // return view('super_admin.user.create', compact('level'));
+        // return view('super_admin.user.create', compact('role'));
     }
 
     /**
@@ -77,6 +77,7 @@ class UserController extends Controller
         ]);
 
         $input = $request->except('password_confirmation');
+        $input['password'] = Hash::make($request->password);
         $input = $request->all();
         if ($foto = $request->file('foto')) {
             $destinationPath = 'image/';
@@ -114,22 +115,34 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        // $data = User::findOrFail($id);
-        // $level = [
-        //     [
-        //         'nama' => 'admin'
-        //     ],
-        //     [
-        //         'nama' => 'kepala_sekolah'
-        //     ],
-        //     [
-        //         'nama' => 'guru'
-        //     ],
-        //     [
-        //         'nama' => 'murid'
-        //     ],
-        // ];
-        // return view('super_admin.user.edit', compact('data', 'level'));
+        $data = User::findOrFail($id);
+        $role = [
+            [
+                'nama' => 'super_admin',
+                'keterangan' => 'Super Admin'
+            ],
+            [
+                'nama' => 'kepala_sekolah',
+                'keterangan' => 'Kepala Sekolah'
+            ],
+            [
+                'nama' => 'staf',
+                'keterangan' => 'Staff'
+            ],
+            [
+                'nama' => 'guru',
+                'keterangan' => 'Guru'
+            ],
+            [
+                'nama' => 'orang_tua',
+                'keterangan' => 'Orang tua murid'
+            ],
+            [
+                'nama' => 'murid',
+                'keterangan' => 'Murid'
+            ],
+        ];
+        return view('super_admin.user_management.edit', compact('data', 'role'));
     }
 
     /**
@@ -137,32 +150,38 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $request->validate([
-        //     'nama' => 'required|string|max:255',
-        //     'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-        //     'level' => 'required',
-        //     'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        // ], [
-        //     'nama.required' => 'Nama user tidak boleh kosong',
-        //     'email.required' => 'Email tidak boleh kosong',
-        //     'level.required' => 'Pilih salah satu level akun',
-        //     'foto.required' => 'Format file tidak didukung'
-        // ]);
-        // $user = User::findOrFail($id);
-        // if ($foto = $request->file('foto')) {
-        //     $destinationPath = 'image/';
-        //     $profileimage = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
-        //     $foto->move($destinationPath, $profileimage);
-        //     $user['foto'] = "$profileimage";
-        // }
-        // $user->nama = $request->nama;
-        // $user->email = $request->email;
-        // $user->level = $request->level;
-        // if ($request->password)
-        //     $user->password = Hash::make($request->password);
-        // $user->save();
-        // return redirect()->route('users.index')
-        //     ->with('success', 'Data Berhasil Di Perbaharui');
+        $request->validate([
+            'nama' => 'required|string|max:25',
+            'email' => 'required|string|email|max:55|unique:users,email,' . $id,
+            'role' => 'required',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ], [
+            'nama.required' => 'Nama user tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'role.required' => 'Pilih salah satu role akun',
+            'password.required' => 'Password harap diisi',
+            'password_confirmation.required' => 'Konfirmasi password harap diisi',
+            'foto.required' => 'Format file tidak didukung'
+        ]);
+        $user = User::findOrFail($id);
+        if ($foto = $request->file('foto')) {
+            $destinationPath = 'image/';
+            $profileimage = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
+            $image = Image::make($foto)->resize(300, 200,)->save('image/' . $profileimage);
+            // Menyimpan gambar yang sudah diubah ukurannya ke folder tujuan
+            $image->save(public_path($destinationPath . $profileimage));
+            $user['foto'] = "$profileimage";
+        }
+        $user->nama = $request->nama;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        if ($request->password)
+            $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->route('users.index')
+            ->with('success', 'Data Berhasil Di Perbaharui');
     }
 
     /**
@@ -170,9 +189,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        // $data = User::findOrFail($id);
-        // $data->delete();
-        // return redirect()->route('users.index')
-        //     ->with('success', 'Data Terhapus');
+        $data = User::findOrFail($id);
+        $data->delete();
+        return redirect()->route('users.index')
+            ->with('success', 'Data Terhapus');
     }
 }
