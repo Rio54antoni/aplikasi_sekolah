@@ -10,21 +10,6 @@ class AuthController extends Controller
 
     public function index()
     {
-        if ($user = Auth::user()) {
-            if ($user->role == 'super_admin') {
-                return redirect()->route('super_admin.index');
-            } elseif ($user->role == 'kepala_sekolah') {
-                return redirect()->route('kepala_sekolah.index');
-            } elseif ($user->role == 'staf') {
-                return redirect()->route('staf.index');
-            } elseif ($user->role == 'guru') {
-                return redirect()->route('guru.index');
-            } elseif ($user->role == 'orang_tua') {
-                return redirect()->route('orang.index');
-            } elseif ($user->role == 'murid') {
-                return redirect()->route('murid.index');
-            }
-        }
         return view('login.login');
     }
 

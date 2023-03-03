@@ -1,6 +1,12 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GuruadmController;
+use App\Http\Controllers\KepalaController;
+use App\Http\Controllers\MuridadmController;
+use App\Http\Controllers\OrangController;
+use App\Http\Controllers\StafadmController;
+use App\Http\Controllers\SuperController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,36 +32,36 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout.index');
 //akses=super
 Route::middleware(['auth', 'super_admin:admin'])->group(function () {
     Route::group(['prefix' => 'super-admin'], function () {
-        Route::get('/index', [AdminController::class, 'super'])->name('super_admin.index');
+        Route::get('/index', [SuperController::class, 'index'])->name('super_admin.index');
     });
 });
 //akses=kepala
 Route::middleware(['auth', 'kepala_sekolah:admin'])->group(function () {
     Route::group(['prefix' => 'kepala-sekolah'], function () {
-        Route::get('/index', [AdminController::class, 'kepala'])->name('kepala_sekolah.index');
+        Route::get('/index', [KepalaController::class, 'index'])->name('kepala_sekolah.index');
     });
 });
 //akses=staf atau admin
 Route::middleware(['auth', 'staf:staf'])->group(function () {
     Route::group(['prefix' => 'staf'], function () {
-        Route::get('/index', [AdminController::class, 'staf'])->name('staf.index');
+        Route::get('/index', [StafadmController::class, 'index'])->name('staf.index');
     });
 });
 //akses=staf atau admin
 Route::middleware(['auth', 'guru:guru'])->group(function () {
     Route::group(['prefix' => 'guru'], function () {
-        Route::get('/index', [AdminController::class, 'guru'])->name('guru.index');
+        Route::get('/index', [GuruadmController::class, 'index'])->name('guru.index');
     });
 });
 //akses=staf atau admin
 Route::middleware(['auth', 'orang_tua:orang_tua'])->group(function () {
     Route::group(['prefix' => 'orang_tua'], function () {
-        Route::get('/index', [AdminController::class, 'orang'])->name('orang.index');
+        Route::get('/index', [OrangController::class, 'index'])->name('orang.index');
     });
 });
 //akses=staf atau admin
 Route::middleware(['auth', 'murid:murid'])->group(function () {
     Route::group(['prefix' => 'murid'], function () {
-        Route::get('/index', [AdminController::class, 'murid'])->name('murid.index');
+        Route::get('/index', [MuridadmController::class, 'index'])->name('murid.index');
     });
 });

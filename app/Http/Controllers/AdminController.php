@@ -10,34 +10,9 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function super()
-    {
-        return view('super_admin.index');
-    }
-    public function kepala()
-    {
-        return view('kepala_sekolah.index');
-    }
-    public function staf()
-    {
-        return view('admin.index');
-    }
-    public function guru()
-    {
-        return view('guru.index');
-    }
-    public function orang()
-    {
-        return view('orang_tua.index');
-    }
-    public function murid()
-    {
-        return view('murid.index');
-    }
-
-
     public function index()
     {
+        //
     }
 
     /**

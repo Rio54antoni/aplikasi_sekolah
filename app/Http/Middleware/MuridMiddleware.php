@@ -14,11 +14,12 @@ class MuridMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() && Auth::user()->level == 'murid') {
+        if (auth()->check() && auth()->user()->role === 'murid') {
             return $next($request);
         }
-        return redirect()->back();
+
+        abort(403, 'Unauthorized');
     }
 }

@@ -14,11 +14,12 @@ class KepalasekolahMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() && Auth::user()->level == 'kepala_sekolah') {
+        if (auth()->check() && auth()->user()->role === 'kepala_sekolah') {
             return $next($request);
         }
-        return redirect()->back();
+
+        abort(403, 'Unauthorized');
     }
 }

@@ -14,11 +14,12 @@ class SuperadminMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() && Auth::user()->level == 'super_admin') {
+        if (auth()->check() && auth()->user()->role === 'super_admin') {
             return $next($request);
         }
-        return redirect()->back();
+
+        abort(403, 'Unauthorized');
     }
 }

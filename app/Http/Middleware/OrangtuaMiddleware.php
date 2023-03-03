@@ -14,11 +14,12 @@ class OrangtuaMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() && Auth::user()->level == 'orang_tua') {
+        if (auth()->check() && auth()->user()->role === 'orang_tua') {
             return $next($request);
         }
-        return redirect()->back();
+
+        abort(403, 'Unauthorized');
     }
 }
