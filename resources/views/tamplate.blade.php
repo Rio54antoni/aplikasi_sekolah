@@ -17,7 +17,7 @@
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-
+    {{-- kalau ambaik dari section lansuang blok section t paste --}}
     <section class="content">
         <div class="container-fluid">
             <!-- Info boxes -->

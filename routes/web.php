@@ -5,6 +5,7 @@ use App\Http\Controllers\GuruadmController;
 use App\Http\Controllers\KepalaController;
 use App\Http\Controllers\MuridadmController;
 use App\Http\Controllers\OrangController;
+use App\Http\Controllers\ProfilappController;
 use App\Http\Controllers\StafadmController;
 use App\Http\Controllers\SuperController;
 use App\Http\Controllers\UserController;
@@ -35,6 +36,7 @@ Route::middleware(['auth', 'super_admin:admin'])->group(function () {
     Route::group(['prefix' => 'super-admin'], function () {
         Route::get('/index', [SuperController::class, 'index'])->name('super_admin.index');
         Route::resource('users', UserController::class);
+        Route::resource('profilapps', ProfilappController::class);
     });
 });
 //akses=kepala
