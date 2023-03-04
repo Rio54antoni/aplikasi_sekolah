@@ -20,9 +20,6 @@
 
     <section class="content">
         <div class="container-fluid">
-            <!-- Info boxes -->
-            <!-- /.row -->
-            <!-- /.row -->
 
             <div class="card card-primary">
                 <div class="card-header">

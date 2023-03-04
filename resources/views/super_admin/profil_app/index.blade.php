@@ -1,5 +1,18 @@
 @extends('master.layouts')
 @section('content')
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" data-bs-delay="5000">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            {{ $message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                document.querySelector('.alert').classList.add('fade');
+                document.querySelector('.alert button').click();
+            }, 5000);
+        </script>
+    @endif
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
