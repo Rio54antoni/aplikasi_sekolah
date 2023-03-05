@@ -4,7 +4,6 @@
         <div class="alert alert-success alert-dismissible fade show" role="alert" data-bs-delay="5000">
             <i class="bi bi-check-circle-fill me-2"></i>
             {{ $message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <script>
             setTimeout(function() {
@@ -42,15 +41,17 @@
                                 </a>
                             </h3>
                             <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="table_search" class="form-control float-right"
-                                        placeholder="Search">
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default">
-                                            <i class="fas fa-search"></i>
-                                        </button>
+                                <form method="GET" action="{{ route('murids.index') }}">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="keyword" value="{{ old('keyword') }}"
+                                            class="form-control float-right" placeholder="Cari ...">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -95,7 +96,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data user ini ?')"><i
+                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data murid ini ?')"><i
                                                             class="fas fa-trash">Hapus</i></button>
                                                 </form>
                                             </td>
@@ -104,6 +105,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="d-flex">
+                                {!! $data->links() !!}
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>

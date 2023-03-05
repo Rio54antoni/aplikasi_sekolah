@@ -21,18 +21,19 @@
 
     <section class="content">
         <div class="row">
-            <div class="col-md-6 mx-auto">
+            <div class="col-md-6">
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Form Input Data Murid</h3>
                     </div>
 
-                    <form action="{{ route('murids.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('murids.update', $data->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="nama">Nama Lengkap</label>
-                                <input name="nama" value="{{ old('nama') }}" type="text"
+                                <input name="nama" value="{{ old('nama', $data->nama) }}" type="text"
                                     class="form-control  @error('nama') is-invalid @enderror" id="nama"
                                     placeholder="Masukan Nama lengkap">
                                 @error('nama')
@@ -41,16 +42,16 @@
                             </div>
                             <div class="form-group">
                                 <label for="nis">NIS</label>
-                                <input name="nis" value="{{ old('nis') }}" type="number"
+                                <input name="nis" value="{{ old('nis', $data->nis) }}" type="number"
                                     class="form-control  @error('nis') is-invalid @enderror" id="nis"
-                                    placeholder="Nis Max 9 Angka">
+                                    placeholder="Masukan Nis">
                                 @error('nis')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="email">Email address</label>
-                                <input name="email" value="{{ old('email') }}" type="email"
+                                <input name="email" value="{{ old('email', $data->email) }}" type="email"
                                     class="form-control  @error('email') is-invalid @enderror" id="email"
                                     placeholder="Masukan email">
                                 @error('email')
@@ -59,7 +60,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="notelepon">No. Telepon</label>
-                                <input name="notelepon" value="{{ old('notelepon') }}" type="number"
+                                <input name="notelepon" value="{{ old('notelepon', $data->notelepon) }}" type="number"
                                     class="form-control  @error('notelepon') is-invalid @enderror" id="notelepon"
                                     placeholder="Masukan No Telepon">
                                 @error('notelepon')
@@ -68,7 +69,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="nohp">No. Hp</label>
-                                <input name="nohp" value="{{ old('nohp') }}" type="number"
+                                <input name="nohp" value="{{ old('nohp', $data->nohp) }}" type="number"
                                     class="form-control  @error('nohp') is-invalid @enderror" id="nohp"
                                     placeholder="Masukan No Hp">
                                 @error('nohp')
@@ -77,8 +78,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="tgl_lahir">Tanggal Lahir</label>
-                                <input name="tgl_lahir" value="{{ old('tgl_lahir') }}" type="date"
+                                <input name="tgl_lahir" value="{{ old('tgl_lahir', $data->tgl_lahir) }}" type="date"
                                     class="form-control  @error('tgl_lahir') is-invalid @enderror" id="tgl_lahir">
+                                {{ $data->tgl_lahir }}
                                 @error('tgl_lahir')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -89,7 +91,7 @@
                                     <option>Pilih</option>
                                     @foreach ($agama as $ag)
                                         <option
-                                            value="{{ $ag->id }}"{{ old('id_agama') == $ag->id ? 'selected' : null }}>
+                                            value="{{ $ag->id }}"{{ old('id_agama', $data->id_agama) == $ag->id ? 'selected' : null }}>
                                             {{ $ag->nama }}</option>
                                     @endforeach
                                 </select>
@@ -103,7 +105,7 @@
                                     <option>Pilih</option>
                                     @foreach ($jk as $jenis)
                                         <option
-                                            value="{{ $jenis->id }}"{{ old('id_jk') == $jenis->id ? 'selected' : null }}>
+                                            value="{{ $jenis->id }}"{{ old('id_jk', $data->id_jk) == $jenis->id ? 'selected' : null }}>
                                             {{ $jenis->nama }}</option>
                                     @endforeach
                                 </select>
@@ -113,20 +115,19 @@
                             </div>
                             <div class="form-group">
                                 <label for="alamat">Alamat</label>
-                                <textarea name="alamat" value="{{ old('alamat') }}" type="text"
-                                    class="form-control  @error('alamat') is-invalid @enderror" id="alamat" placeholder="Masukan Alamat">{{ old('alamat') }}</textarea>
+                                <textarea name="alamat" value="" type="text" class="form-control  @error('alamat') is-invalid @enderror"
+                                    id="alamat" placeholder="Masukan Alamat">{{ old('alamat', $data->alamat) }}</textarea>
                                 @error('alamat')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="foto">Upload Foto</label>
+                                <label for="foto">Upload Ganti Foto</label>
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input name="foto" type="file" class="custom-file-input" id="foto"
-                                            value="{{ old('foto') }}"
-                                            class="@error('foto') is-invalid @enderror">{{ old('foto') }}
-                                        <label class="custom-file-label" for="foto"></label>
+                                            value="{{ old('foto') }}" class="@error('foto') is-invalid @enderror">
+                                        <label class="custom-file-label" for="foto">Ganti Foto</label>
                                     </div>
                                     <div class="input-group-append">
                                         <span class="input-group-text">Upload</span>
@@ -148,6 +149,20 @@
                             </a>
                         </div>
                     </form>
+                </div>
+                <!-- /.card -->
+            </div>
+            <div class="col-md-6">
+                <div class="card card-secondary">
+                    <div class="card-header float-center">
+                        <h3 class="card-title">Foto Murid</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img class=" img-fluid" src="/image/{{ $data->foto }} " height="120px">
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
             </div>

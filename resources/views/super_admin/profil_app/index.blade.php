@@ -4,7 +4,6 @@
         <div class="alert alert-success alert-dismissible fade show" role="alert" data-bs-delay="5000">
             <i class="bi bi-check-circle-fill me-2"></i>
             {{ $message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <script>
             setTimeout(function() {
