@@ -27,8 +27,10 @@
                     <!-- small card -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>150</h3>
-                            <p>Murid</p>
+                            <h3>Murid</h3>
+                            <h5>
+                                Total : {{ $murid }}
+                            </h5>
                         </div>
                         <div class="icon">
                             <i class="fas fa-user-plus"></i>
@@ -43,14 +45,15 @@
                     <!-- small card -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                            <p>Pegawai</p>
+                            <h3>Pegawai</h3>
+                            <h5>
+                                Total : {{ $pegawai }}
+                            </h5>
                         </div>
                         <div class="icon">
                             <i class="fas fa-user-plus"></i>
                         </div>
-                        <a href="#" class="small-box-footer">
+                        <a href="{{ route('pegawais.index') }}" class="small-box-footer">
                             More info <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>

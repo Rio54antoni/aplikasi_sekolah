@@ -6,6 +6,7 @@ use App\Http\Controllers\KepalaController;
 use App\Http\Controllers\MuridadmController;
 use App\Http\Controllers\MuridController;
 use App\Http\Controllers\OrangController;
+use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProfilappController;
 use App\Http\Controllers\StafadmController;
 use App\Http\Controllers\SuperController;
@@ -31,7 +32,7 @@ Route::get('/login', [AuthController::class, 'index'])->name('login.index');
 Route::post('/proseslogin', [AuthController::class, 'proses'])->name('proseslogin.index');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout.index');
 //jika berhasil akan diarahkan ke route selanjutnya 
-//yang sesuai dengan aksesnya
+//yang sesuai dengan aksesnya : 
 //akses=super
 Route::middleware(['auth', 'super_admin:admin'])->group(function () {
     Route::group(['prefix' => 'super-admin'], function () {
@@ -39,6 +40,7 @@ Route::middleware(['auth', 'super_admin:admin'])->group(function () {
         Route::resource('users', UserController::class);
         Route::resource('profilapps', ProfilappController::class);
         Route::resource('murids', MuridController::class);
+        Route::resource('pegawais', PegawaiController::class);
     });
 });
 //akses=kepala
