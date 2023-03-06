@@ -64,12 +64,14 @@
                     <div class="small-box bg-secondary">
                         <div class="inner">
                             <h3>Orang tua</h3>
-
+                            <h5>
+                                Total :
+                            </h5>
                         </div>
                         <div class="icon">
                             <i class="fas fa-user-plus"></i>
                         </div>
-                        <a href="#" class="small-box-footer">
+                        <a href="{{ route('orangtuas.index') }}" class="small-box-footer">
                             More info <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>

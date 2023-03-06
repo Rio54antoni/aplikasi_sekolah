@@ -7,6 +7,7 @@ use App\Http\Controllers\KepalaController;
 use App\Http\Controllers\MuridadmController;
 use App\Http\Controllers\MuridController;
 use App\Http\Controllers\OrangController;
+use App\Http\Controllers\OrangtuaController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProfilappController;
 use App\Http\Controllers\StafadmController;
@@ -44,6 +45,7 @@ Route::middleware(['auth', 'super_admin:admin'])->group(function () {
         Route::resource('admins', AdminController::class);
         Route::resource('murids', MuridController::class);
         Route::resource('pegawais', PegawaiController::class);
+        Route::resource('orangtuas', OrangtuaController::class);
     });
 });
 //akses=kepala

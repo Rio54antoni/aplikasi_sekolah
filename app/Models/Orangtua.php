@@ -24,7 +24,7 @@ class Orangtua extends Model
     {
         return $this->belongsTo(Kerja::class, 'id_kerja');
     }
-    public function hubungan()
+    public function hubungan1()
     {
         return $this->belongsTo(Murid::class, 'hubungan');
     }
