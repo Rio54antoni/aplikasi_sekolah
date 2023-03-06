@@ -17,12 +17,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Data Murid</h1>
+                    <h1 class="m-0">Data Staff</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Data Murid</li>
+                        <li class="breadcrumb-item active">Data Staff</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -36,16 +36,16 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title"> <a href="{{ route('murids.create') }}" class="btn btn-sm btn-success">
+                            <h3 class="card-title"> <a href="{{ route('admins.create') }}" class="btn btn-sm btn-success">
                                     <i class="fas fa-user-plus mr-2">Tambah</i>
                                 </a>
-                                &nbsp;
-                                <a href="{{ route('super_admin.index') }}" class="btn btn-sm btn-secondary">
-                                    kembali
-                                </a>
                             </h3>
+                            &nbsp;
+                            <a href="{{ route('super_admin.index') }}" class="btn btn-sm btn-secondary">
+                                kembali
+                            </a>
                             <div class="card-tools">
-                                <form method="GET" action="{{ route('murids.index') }}">
+                                <form method="GET" action="{{ route('admins.index') }}">
                                     <div class="input-group input-group-sm" style="width: 150px;">
                                         <input type="text" name="keyword" value="{{ old('keyword') }}"
                                             class="form-control float-right" placeholder="Cari ...">
@@ -63,7 +63,7 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th>NIS</th>
+                                        <th>No</th>
                                         <th>Nama</th>
                                         <th>Email</th>
                                         {{-- <th>Kontak (No.tlp/No.hp)</th> --}}
@@ -75,9 +75,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
                                     @foreach ($data as $d)
                                         <tr>
-                                            <td>{{ $d->nis }}</td>
+                                            <td>{{ $no++ }}</td>
                                             <td>{{ $d->nama }}</td>
                                             <td>{{ $d->email }}</td>
                                             {{-- <td>{{ $d->notelepon }} / {{ $d->nohp }}</td> --}}
@@ -85,15 +88,15 @@
                                             </td>
                                             <td>{{ $d->agama->nama }}</td>
                                             <td>{{ $d->jeniskelamin->nama }}</td>
-                                            <td><img src="/image/{{ $d->foto }}" width="75px" height="100px"></td>
+                                            <td><img src="/image/{{ $d->foto }}" width="55px" height="70px"></td>
                                             <td>
-                                                <form class="ml-auto" action="{{ route('murids.destroy', $d->id) }}"
+                                                <form class="ml-auto" action="{{ route('admins.destroy', $d->id) }}"
                                                     method="POST">
 
-                                                    <a href="{{ route('murids.show', $d->id) }}"
+                                                    <a href="{{ route('admins.show', $d->id) }}"
                                                         class="btn btn-info btn-square btn-sm">
                                                         <i class="far fa-eye">View</i> </a>
-                                                    <a href="{{ route('murids.edit', $d->id) }}"
+                                                    <a href="{{ route('admins.edit', $d->id) }}"
                                                         class="btn btn-warning btn-square btn-sm">
                                                         <i class="fas fa-edit">Edit</i>
                                                     </a>
@@ -108,6 +111,7 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
+
                             </table>
                             <div class="d-flex">
                                 {!! $data->links() !!}

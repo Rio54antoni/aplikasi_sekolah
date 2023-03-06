@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Murid;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ class SuperController extends Controller
     {
         $murid = Murid::count();
         $pegawai = Pegawai::count();
-        return view('super_admin.index', compact('murid', 'pegawai'));
+        $staf = Admin::count();
+        return view('super_admin.index', compact('murid', 'pegawai', 'staf'));
     }
 }

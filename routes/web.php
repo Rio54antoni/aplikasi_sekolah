@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuruadmController;
 use App\Http\Controllers\KepalaController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\ProfilappController;
 use App\Http\Controllers\StafadmController;
 use App\Http\Controllers\SuperController;
 use App\Http\Controllers\UserController;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +41,7 @@ Route::middleware(['auth', 'super_admin:admin'])->group(function () {
         Route::get('/index', [SuperController::class, 'index'])->name('super_admin.index');
         Route::resource('users', UserController::class);
         Route::resource('profilapps', ProfilappController::class);
+        Route::resource('admins', AdminController::class);
         Route::resource('murids', MuridController::class);
         Route::resource('pegawais', PegawaiController::class);
     });

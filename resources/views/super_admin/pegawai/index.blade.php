@@ -40,6 +40,10 @@
                                     <i class="fas fa-user-plus mr-2">Tambah</i>
                                 </a>
                             </h3>
+                            &nbsp;
+                            <a href="{{ route('super_admin.index') }}" class="btn btn-sm btn-secondary">
+                                kembali
+                            </a>
                             <div class="card-tools">
                                 <form method="GET" action="{{ route('pegawais.index') }}">
                                     <div class="input-group input-group-sm" style="width: 150px;">
