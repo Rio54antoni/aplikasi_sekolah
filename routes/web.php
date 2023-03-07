@@ -3,7 +3,10 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuruadmController;
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\KelasController;
 use App\Http\Controllers\KepalaController;
+use App\Http\Controllers\MataPelajaranController;
 use App\Http\Controllers\MuridadmController;
 use App\Http\Controllers\MuridController;
 use App\Http\Controllers\OrangController;
@@ -14,6 +17,7 @@ use App\Http\Controllers\StafadmController;
 use App\Http\Controllers\SuperController;
 use App\Http\Controllers\UserController;
 use App\Models\Admin;
+use App\Models\Kelas;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +50,9 @@ Route::middleware(['auth', 'super_admin:admin'])->group(function () {
         Route::resource('murids', MuridController::class);
         Route::resource('pegawais', PegawaiController::class);
         Route::resource('orangtuas', OrangtuaController::class);
+        Route::resource('kelas', KelasController::class);
+        Route::resource('mata_pelajarans', MataPelajaranController::class);
+        Route::resource('jadwals', JadwalController::class);
     });
 });
 //akses=kepala
