@@ -7,17 +7,34 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic;
 use Illuminate\Support\Facades\Hash;
+// use DataTables;
+use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = User::all();
-        return view('super_admin.user_management.index', compact('data'));
+        if ($request->ajax()) {
+            $data = User::select('id', 'nama',  'email', 'role', 'foto')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="' . route('users.edit', $row->id) . '"class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
+                    $btn = $btn . '<a href="' . route('users.destroy', $row->id) . '" onclick="confirmDelete()"class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></a>';
+                    return $btn;
+                })
+                ->addColumn('foto', function ($row) {
+                    return '<img src="/image/' . $row->foto . '" width="50" height="50" />';
+                })
+                ->rawColumns(['action', 'foto'])
+                ->make(true);
+        }
+        return view('super_admin.user_management.index');
     }
+
 
     /**
      * Show the form for creating a new resource.

@@ -1,4 +1,8 @@
 @extends('master.layouts')
+@push('css')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+@endpush
 @section('content')
     {{-- notifikasi tindakan --}}
     @if ($message = Session::get('success'))
@@ -34,73 +38,88 @@
 
     <section class="content">
         <div class="container-fluid">
-            <!-- Info boxes -->
-            <!-- /.row -->
-            <!-- /.row -->
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Tabel User</h3>
-                    <div class="d-flex justify-content-end align-items-center">
-                        <a href="{{ route('users.create') }}" class="btn btn-success">
-                            <i class="fas fa-user-plus mr-2"></i> Tambah User
-                        </a>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Data User Management</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover userstable">
+                                <thead>
+                                    <tr>
+                                        <th>NO</th>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Foto</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
+                    <!-- /.card -->
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th style="width: 10px">No</th>
-                                <th>Nama</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Foto</th>
-                                <th style="width: 225px">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $n = 1;
-                            @endphp
-                            @foreach ($data as $d)
-                                <tr>
-                                    <td>{{ $n++ }}.</td>
-                                    <td>{{ $d->nama }}</td>
-                                    <td>{{ $d->email }}</td>
-                                    <td>{{ $d->role }}</td>
-                                    <td><img src="/image/{{ $d->foto }}" width="75px" height="100px"></td>
-                                    <td>
-                                        <form class="ml-auto" action="{{ route('users.destroy', $d->id) }}" method="POST">
-                                            <a href="{{ route('users.show', $d->id) }}"
-                                                class="btn btn-info btn-square btn-sm">
-                                                <i class="far fa-eye">View</i> </a>
-                                            <a href="{{ route('users.edit', $d->id) }}"
-                                                class="btn btn-warning btn-square btn-sm">
-                                                <i class="fas fa-edit">Edit</i>
-                                            </a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus data user ini ?')"><i
-                                                    class="fas fa-trash">Hapus</i></button>
-                                        </form>
-
-                                    </td>
-                                </tr>
-                        </tbody>
-                        @endforeach
-                    </table>
-                </div>
-                <!-- /.card-body -->
+                <!-- /.col -->
             </div>
-
-
-
-
-            <!-- Main row -->
             <!-- /.row -->
         </div>
-        <!--/. container-fluid -->
+        <!-- /.container-fluid -->
     </section>
 @endsection
+@push('js')
+    <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.userstable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('users.index') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'role',
+                        name: 'role'
+                    },
+                    {
+                        data: 'foto',
+                        name: 'foto'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    },
+
+                ],
+                deferRender: true
+            });
+        });
+    </script>
+@endpush
