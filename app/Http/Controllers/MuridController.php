@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Agama;
 use App\Models\Jenisk;
 use App\Models\Murid;
+use Carbon\Carbon;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Hash;
 
 class MuridController extends Controller
@@ -16,12 +18,32 @@ class MuridController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->input('keyword');
-        $data = Murid::where('nama', 'LIKE', "%$keyword%")
-            ->orWhere('nis', 'LIKE', "%$keyword%")
-            ->paginate(5);
-        // $data = Murid::all();
-        return view('super_admin.murid.index', compact('data'));
+        if ($request->ajax()) {
+            $data = Murid::select('*')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn =  '<a href="' . route('murids.show', $row->id) . '"class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Show"><i class="fas fa-info-circle"></i></a> |';
+                    $btn = $btn . '<a href="' . route('murids.edit', $row->id) . '"class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
+                    $btn = $btn . '<form action="' . route('murids.destroy', $row->id) . '" method="POST" onsubmit="confirmDelete()" style="display: inline-block">
+                    ' . method_field('DELETE') . csrf_field() . '
+                    <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></button>
+                    </form>';
+                    return $btn;
+                })
+                ->addColumn('id_jk', function ($row) {
+                    return ($row->jeniskelamin->nama);
+                })
+                ->addColumn('tgl_lahir', function ($row) {
+                    return Carbon::parse($row->tgl_lahir)->isoFormat('dddd, DD MMMM YYYY');
+                })
+                ->addColumn('foto', function ($row) {
+                    return '<img src="/image/images/' . $row->foto . '" width="50" height="50" />';
+                })
+                ->rawColumns(['action', 'foto', 'tgl_lahir'])
+                ->make(true);
+        }
+        return view('super_admin.murid.index');
     }
 
     /**

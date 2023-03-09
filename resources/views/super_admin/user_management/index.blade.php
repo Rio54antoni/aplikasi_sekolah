@@ -57,7 +57,7 @@
                                         <th>Nama</th>
                                         <th>Email</th>
                                         <th>Role</th>
-                                        {{-- <th>Foto</th> --}}
+                                        <th>Foto</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -123,10 +123,10 @@
                         data: 'role',
                         name: 'role'
                     },
-                    // {
-                    //     data: 'foto',
-                    //     name: 'foto'
-                    // },
+                    {
+                        data: 'foto',
+                        name: 'foto'
+                    },
                     {
                         data: 'action',
                         name: 'action',
