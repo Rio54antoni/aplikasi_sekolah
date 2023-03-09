@@ -15,7 +15,12 @@
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <a href="#" class="d-block">Alexander Pierce</a>
+                    </ul>
+                </nav>
             </div>
         </div>
 

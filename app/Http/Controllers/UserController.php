@@ -18,20 +18,25 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::select('id', 'nama',  'email', 'role', 'foto')->get();
+            $data = User::select('id', 'nama',  'email', 'role')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' . route('users.edit', $row->id) . '"class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
-                    $btn = $btn . '<a href="' . route('users.destroy', $row->id) . '" onclick="confirmDelete()"class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></a>';
+                    $btn = '<a href="' . route('users.show', $row->id) . '"class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Show"><i class="fas fa-info-circle"></i></a> |';
+                    $btn = $btn . '<a href="' . route('users.edit', $row->id) . '"class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
+                    $btn = $btn . '<form action="' . route('users.destroy', $row->id) . '" method="POST" onsubmit="confirmDelete()" style="display: inline-block">
+                    ' . method_field('DELETE') . csrf_field() . '
+                    <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></button>
+                    </form>';
                     return $btn;
                 })
                 ->addColumn('foto', function ($row) {
-                    return '<img src="/image/' . $row->foto . '" width="50" height="50" />';
+                    return '<img src="/image/images/' . $row->foto . '" width="50" height="50" />';
                 })
                 ->rawColumns(['action', 'foto'])
                 ->make(true);
         }
+
         return view('super_admin.user_management.index');
     }
 
@@ -95,13 +100,14 @@ class UserController extends Controller
 
         $input = $request->except('password_confirmation');
         $input['password'] = Hash::make($request->password);
-        $input = $request->all();
+        // $input = $request->all();
         if ($foto = $request->file('foto')) {
             $destinationPath = 'image/';
             $profileimage = date('YmdHis') . "." . $foto->getClientOriginalExtension();
-            $image = Image::make($foto)->resize(300, 200,)->save('image/' . $profileimage);
+            $image = Image::make($foto)->resize(300, 300,)->save('image/images/' . $profileimage);
             // Menyimpan gambar yang sudah diubah ukurannya ke folder tujuan
-            $image->save(public_path($destinationPath . $profileimage));
+            // $image->save(public_path($destinationPath . $profileimage));
+            $foto->move($destinationPath, $profileimage);
             $input['foto'] = "$profileimage";
         } else {
             $input['foto'] = null;
@@ -186,7 +192,7 @@ class UserController extends Controller
         if ($foto = $request->file('foto')) {
             $destinationPath = 'image/';
             $profileimage = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
-            $image = Image::make($foto)->resize(300, 200,)->save('image/' . $profileimage);
+            $image = Image::make($foto)->resize(300, 300,)->save('image/images/' . $profileimage);
             // Menyimpan gambar yang sudah diubah ukurannya ke folder tujuan
             $image->save(public_path($destinationPath . $profileimage));
             $user['foto'] = "$profileimage";

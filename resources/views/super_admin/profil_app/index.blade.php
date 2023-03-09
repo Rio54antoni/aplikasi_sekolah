@@ -28,8 +28,6 @@
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
-    <!-- /.content-header -->
-    {{-- kalau ambaik dari section lansuang blok section t paste --}}
     <section class="content">
         <div class="container-fluid">
             {{-- mulai logo data profil --}}
@@ -57,7 +55,6 @@
                                         <img class="profile-user-img img-fluid img-circle img-lg"
                                             src="/image/{{ $d->logo }}">
                                     </div>
-                                    <hr>
                                     <h3 class="profile-username text-center">{{ $d->nama }}</h3>
                                     <p class="text-muted text-center"> Nomor Statistik Sekolah (NSS) :
                                         {{ $d->nss }}</p>
@@ -70,20 +67,6 @@
                         <!-- About Me Box -->
                         <div class="col">
                             <div class="card card-primary">
-                                {{-- <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <h3 class="card-title"> Tentang</h3>
-                                        </div>
-                                        <div class="col-6 text-right">
-                                            <a href="{{ route('profilapps.edit', $d->id) }}"
-                                                class="btn btn-primary btn-square btn-sm">
-                                                <i class="fas fa-edit text-light">Edit</i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                <!-- /.card-header -->
                                 <div class="card-body">
                                     <strong>Kontak</strong>
                                     <p class="text">
@@ -109,11 +92,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- /.col -->
-                <!-- /.col -->
             </div>
-            {{-- end logo data profil --}}
             <div class="row mt-4">
                 <div class="row">
                     <div class="col-md-3">
@@ -171,12 +150,9 @@
                             <div class="card-body">
                                 The body of the card
                             </div>
-                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card -->
+
                     </div>
-                    <!-- /.col -->
-                    <!-- /.col -->
                     <div class="col-md-3">
                         <div class="card card-warning">
                             <div class="card-header">
