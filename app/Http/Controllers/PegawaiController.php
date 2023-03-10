@@ -6,8 +6,10 @@ use App\Models\Agama;
 use App\Models\Jabatan;
 use App\Models\Jenisk;
 use App\Models\Pegawai;
+use Carbon\Carbon;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class PegawaiController extends Controller
 {
@@ -16,11 +18,32 @@ class PegawaiController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->input('keyword');
-        $data = Pegawai::where('nama', 'LIKE', "%$keyword%")
-            ->orWhere('nip', 'LIKE', "%$keyword%")
-            ->paginate(5);
-        return view('super_admin.pegawai.index', compact('data'));
+        if ($request->ajax()) {
+            $data = Pegawai::select('*')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn =  '<a href="' . route('pegawais.show', $row->id) . '"class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Show"><i class="fas fa-info-circle"></i></a> |';
+                    $btn = $btn . '<a href="' . route('pegawais.edit', $row->id) . '"class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
+                    $btn = $btn . '<form action="' . route('pegawais.destroy', $row->id) . '" method="POST" onsubmit="confirmDelete()" style="display: inline-block">
+                ' . method_field('DELETE') . csrf_field() . '
+                <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></button>
+                </form>';
+                    return $btn;
+                })
+                ->addColumn('id_jk', function ($row) {
+                    return ($row->jeniskelamin->nama);
+                })
+                ->addColumn('tgl_lahir', function ($row) {
+                    return Carbon::parse($row->tgl_lahir)->isoFormat('dddd, DD MMMM YYYY');
+                })
+                ->addColumn('foto', function ($row) {
+                    return '<img src="/image/images/' . $row->foto . '" width="50" height="50" />';
+                })
+                ->rawColumns(['action', 'foto', 'tgl_lahir'])
+                ->make(true);
+        }
+        return view('super_admin.pegawai.index');
     }
 
     /**
@@ -56,8 +79,9 @@ class PegawaiController extends Controller
         if ($foto = $request->file('foto')) {
             $destinationPath = 'image/';
             $profileimage = date('YmdHis') . "." . $foto->getClientOriginalExtension();
-            $image = Image::make($foto)->resize(300, 300)->save('image/' . $profileimage);
-            $image->save(public_path($destinationPath . $profileimage));
+            $image = Image::make($foto)->resize(300, 300)->save('image/images/' . $profileimage);
+            // $image->save(public_path($destinationPath . $profileimage));
+            $foto->move($destinationPath, $profileimage);
             $input['foto'] = "$profileimage";
         } else {
             $input['foto'] = null;
@@ -120,9 +144,10 @@ class PegawaiController extends Controller
         if ($foto = $request->file('foto')) {
             $destinationPath = 'image/';
             $profileimage = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
-            $image = Image::make($foto)->resize(300, 200,)->save('image/' . $profileimage);
+            $image = Image::make($foto)->resize(300, 200,)->save('image/images/' . $profileimage);
             // Menyimpan gambar yang sudah diubah ukurannya ke folder tujuan
-            $image->save(public_path($destinationPath . $profileimage));
+            // $image->save(public_path($destinationPath . $profileimage));
+            $foto->move($destinationPath, $profileimage);
             $user['foto'] = "$profileimage";
         }
         $user->nama = $request->nama;

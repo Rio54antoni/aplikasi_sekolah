@@ -1,4 +1,12 @@
 @extends('master.layouts')
+@section('title')
+    Dashboard
+@endsection
+@section('breadcrumbs')
+    {{ Breadcrumbs::render() }}
+@endsection
+@push('css')
+@endpush
 @section('content')
     @if ($message = Session::get('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert" data-bs-delay="5000">
@@ -13,21 +21,7 @@
         </script>
     @endif
     <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard Administrator</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+
     <!-- /.content-header -->
 
     <section class="content">
@@ -182,47 +176,46 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div class="card-body table-responsive p-0" style="height: 280px;">
-                                <table class="table table-head-fixed text-nowrap">
-                                    <thead>
+                        <div class="card-body table-responsive p-0" style="height: 280px;">
+                            <table class="table table-head-fixed text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Mata Pelajaran</th>
+                                        <th>Guru Pengajar</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach ($matapelajaran as $matap)
                                         <tr>
-                                            <th>No</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Guru Pengajar</th>
-                                            <th>Action</th>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $matap->nama }}</td>
+                                            <td>{{ $matap->mapel->nama }}</td>
+                                            <td>
+                                                <form class="ml-auto"
+                                                    action="{{ route('mata_pelajarans.destroy', $matap->id) }}"
+                                                    method="POST">
+                                                    <a href="{{ route('mata_pelajarans.edit', $matap->id) }}"
+                                                        class="btn btn-warning btn-square btn-sm">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini ?')"><i
+                                                            class="fas fa-trash"></i></button>
+                                                </form>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $no = 1;
-                                        @endphp
-                                        @foreach ($matapelajaran as $matap)
-                                            <tr>
-                                                <td>{{ $no++ }}</td>
-                                                <td>{{ $matap->nama }}</td>
-                                                <td>{{ $matap->mapel->nama }}</td>
-                                                <td>
-                                                    <form class="ml-auto"
-                                                        action="{{ route('mata_pelajarans.destroy', $matap->id) }}"
-                                                        method="POST">
-                                                        <a href="{{ route('mata_pelajarans.edit', $matap->id) }}"
-                                                            class="btn btn-warning btn-square btn-sm">
-                                                            <i class="fas fa-edit"></i>
-                                                        </a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Apakah Anda yakin ingin menghapus data ini ?')"><i
-                                                                class="fas fa-trash"></i></button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
+
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
@@ -238,45 +231,43 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div class="card-body table-responsive p-0" style="height: 280px;">
-                                <table class="table table-head-fixed text-nowrap">
-                                    <thead>
+                        <div class="card-body table-responsive p-0" style="height: 280px;">
+                            <table class="table table-head-fixed text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>kelas</th>
+                                        <th>Wali Kelas</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $n = 1;
+                                    @endphp
+                                    @foreach ($wali as $wal)
                                         <tr>
-                                            <th>No</th>
-                                            <th>kelas</th>
-                                            <th>Wali Kelas</th>
-                                            <th>Action</th>
+                                            <td>{{ $n++ }}</td>
+                                            <td>{{ $wal->nama }}</td>
+                                            <td>{{ $wal->wali_kelas->nama }}</td>
+                                            <td>
+                                                <form class="ml-auto" action="{{ route('kelas.destroy', $wal->id) }}"
+                                                    method="POST">
+                                                    <a href="{{ route('kelas.edit', $wal->id) }}"
+                                                        class="btn btn-warning btn-square btn-sm">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini ?')"><i
+                                                            class="fas fa-trash"></i></button>
+                                                </form>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $n = 1;
-                                        @endphp
-                                        @foreach ($wali as $wal)
-                                            <tr>
-                                                <td>{{ $n++ }}</td>
-                                                <td>{{ $wal->nama }}</td>
-                                                <td>{{ $wal->wali_kelas->nama }}</td>
-                                                <td>
-                                                    <form class="ml-auto" action="{{ route('kelas.destroy', $wal->id) }}"
-                                                        method="POST">
-                                                        <a href="{{ route('kelas.edit', $wal->id) }}"
-                                                            class="btn btn-warning btn-square btn-sm">
-                                                            <i class="fas fa-edit"></i>
-                                                        </a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Apakah Anda yakin ingin menghapus data ini ?')"><i
-                                                                class="fas fa-trash"></i></button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -834,3 +825,6 @@
         </div><!-- /.container-fluid -->
     </section>
 @endsection
+@push('js')
+    <script src="{{ asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+@endpush

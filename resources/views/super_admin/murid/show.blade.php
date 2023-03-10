@@ -67,7 +67,7 @@
                     </div>
                     <div class="card-body">
                         <div class="text-center">
-                            <img class=" img-fluid" src="/image/{{ $data->foto }} " height="120px">
+                            <img class=" img-fluid" src="/image/{{ $data->foto }} "width="100px" height="100px">
                         </div>
                         <div class="form-group text-center">
                             NIS : {{ $data->nis }}

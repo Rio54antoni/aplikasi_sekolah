@@ -177,15 +177,15 @@ class UserController extends Controller
             'nama' => 'required|string|max:25',
             'email' => 'required|string|email|max:55|unique:users,email,' . $id,
             'role' => 'required',
-            'password' => 'required|min:6|confirmed',
-            'password_confirmation' => 'required',
+            // 'password' => 'required|min:6|confirmed',
+            // 'password_confirmation' => 'required',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ], [
             'nama.required' => 'Nama user tidak boleh kosong',
             'email.required' => 'Email tidak boleh kosong',
             'role.required' => 'Pilih salah satu role akun',
-            'password.required' => 'Password harap diisi',
-            'password_confirmation.required' => 'Konfirmasi password harap diisi',
+            // 'password.required' => 'Password harap diisi',
+            // 'password_confirmation.required' => 'Konfirmasi password harap diisi',
             'foto.required' => 'Format file tidak didukung'
         ]);
         $user = User::findOrFail($id);
@@ -194,14 +194,18 @@ class UserController extends Controller
             $profileimage = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
             $image = Image::make($foto)->resize(300, 300,)->save('image/images/' . $profileimage);
             // Menyimpan gambar yang sudah diubah ukurannya ke folder tujuan
-            $image->save(public_path($destinationPath . $profileimage));
+            // $image->save(public_path($destinationPath . $profileimage));
+            $foto->move($destinationPath, $profileimage);
             $user['foto'] = "$profileimage";
         }
         $user->nama = $request->nama;
         $user->email = $request->email;
         $user->role = $request->role;
-        if ($request->password)
+        if ($request->password) {
             $user->password = Hash::make($request->password);
+        } else {
+            $user->password;
+        }
         $user->save();
         return redirect()->route('users.index')
             ->with('success', 'Data Berhasil Di Perbaharui');

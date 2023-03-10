@@ -1,4 +1,8 @@
 @extends('master.layouts')
+@push('css')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+@endpush
 @section('content')
     @if ($message = Session::get('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert" data-bs-delay="5000">
@@ -44,78 +48,24 @@
                             <a href="{{ route('super_admin.index') }}" class="btn btn-sm btn-secondary">
                                 kembali
                             </a>
-                            <div class="card-tools">
-                                <form method="GET" action="{{ route('admins.index') }}">
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="keyword" value="{{ old('keyword') }}"
-                                            class="form-control float-right" placeholder="Cari ...">
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-hover text-nowrap">
+                        <div class="card-body">
+                            <table class="table table-hover text-nowrap stafftable">
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
+                                        <th>Alamat</th>
                                         <th>Email</th>
                                         {{-- <th>Kontak (No.tlp/No.hp)</th> --}}
                                         <th>Tanggal Lahir</th>
-                                        <th>Agama</th>
                                         <th>Jenis Kelamin</th>
                                         <th>Foto</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @php
-                                        $no = 1;
-                                    @endphp
-                                    @foreach ($data as $d)
-                                        <tr>
-                                            <td>{{ $no++ }}</td>
-                                            <td>{{ $d->nama }}</td>
-                                            <td>{{ $d->email }}</td>
-                                            {{-- <td>{{ $d->notelepon }} / {{ $d->nohp }}</td> --}}
-                                            <td>{{ \Carbon\Carbon::parse($d->tgl_lahir)->isoFormat('dddd, DD MMMM YYYY') }}
-                                            </td>
-                                            <td>{{ $d->agama->nama }}</td>
-                                            <td>{{ $d->jeniskelamin->nama }}</td>
-                                            <td><img src="/image/{{ $d->foto }}" width="55px" height="70px"></td>
-                                            <td>
-                                                <form class="ml-auto" action="{{ route('admins.destroy', $d->id) }}"
-                                                    method="POST">
-
-                                                    <a href="{{ route('admins.show', $d->id) }}"
-                                                        class="btn btn-info btn-square btn-sm">
-                                                        <i class="far fa-eye">View</i> </a>
-                                                    <a href="{{ route('admins.edit', $d->id) }}"
-                                                        class="btn btn-warning btn-square btn-sm">
-                                                        <i class="fas fa-edit">Edit</i>
-                                                    </a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data murid ini ?')"><i
-                                                            class="fas fa-trash">Hapus</i></button>
-                                                </form>
-                                            </td>
-
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-
                             </table>
-                            <div class="d-flex">
-                                {!! $data->links() !!}
-                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -126,3 +76,76 @@
         </div><!-- /.container-fluid -->
     </section>
 @endsection
+{{-- bagian javascript --}}
+@push('js')
+    <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    <script type="text/javascript">
+        function confirmDelete() {
+            if (!confirm("Yakin Ingin Menghapus Data ini ??"))
+                event.preventDefault();
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.stafftable').DataTable({
+                processing: true,
+                serverSide: true,
+                "paging": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+                ajax: "{{ route('admins.index') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'alamat',
+                        name: 'alamat'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'tgl_lahir',
+                        name: 'tgl_lahir'
+                    },
+                    {
+                        data: 'id_jk',
+                        name: 'id_jk'
+                    },
+                    {
+                        data: 'foto',
+                        name: 'foto'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    },
+
+                ],
+                deferRender: true
+            });
+        });
+    </script>
+@endpush

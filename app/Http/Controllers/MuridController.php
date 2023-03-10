@@ -78,9 +78,10 @@ class MuridController extends Controller
         if ($foto = $request->file('foto')) {
             $destinationPath = 'image/';
             $profileimage = date('YmdHis') . "." . $foto->getClientOriginalExtension();
-            $image = Image::make($foto)->resize(300, 200,)->save('image/' . $profileimage);
+            $image = Image::make($foto)->resize(300, 200,)->save('image/images/' . $profileimage);
             // Menyimpan gambar yang sudah diubah ukurannya ke folder tujuan
-            $image->save(public_path($destinationPath . $profileimage));
+            // $image->save(public_path($destinationPath . $profileimage));
+            $foto->move($destinationPath, $profileimage);
             $input['foto'] = "$profileimage";
         } else {
             $input['foto'] = null;
@@ -141,9 +142,10 @@ class MuridController extends Controller
         if ($foto = $request->file('foto')) {
             $destinationPath = 'image/';
             $profileimage = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
-            $image = Image::make($foto)->resize(300, 200,)->save('image/' . $profileimage);
+            $image = Image::make($foto)->resize(300, 200,)->save('image/images/' . $profileimage);
             // Menyimpan gambar yang sudah diubah ukurannya ke folder tujuan
-            $image->save(public_path($destinationPath . $profileimage));
+            // $image->save(public_path($destinationPath . $profileimage));
+            $foto->move($destinationPath, $profileimage);
             $user['foto'] = "$profileimage";
         }
         $user->nama = $request->nama;

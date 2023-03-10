@@ -5,7 +5,6 @@
             class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
-
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
@@ -28,8 +27,6 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
-
-                <li class="nav-header"></li>
                 <li class="nav-item">
                     <a href="{{ route('super_admin.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -38,7 +35,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ request()->routeIs('users.*') ? 'active' : '' }} active">
                     <a href="{{ route('users.index') }}" class="nav-link">
                         <i class="fas fa-cog"></i>
                         <p>

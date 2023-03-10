@@ -1,4 +1,11 @@
 @extends('master.layouts')
+@section('title')
+    User Management
+@endsection
+@section('breadcrumbs')
+    {{ Breadcrumbs::render() }}
+@endsection
+
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -18,7 +25,7 @@
     @endif
     {{-- end notifikasi --}}
     <!-- Content Header (Page header) -->
-    <div class="content-header">
+    {{-- <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
@@ -34,7 +41,7 @@
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
-    <!-- /.content-header -->
+    <!-- /.content-header --> --}}
 
     <section class="content">
         <div class="container-fluid">

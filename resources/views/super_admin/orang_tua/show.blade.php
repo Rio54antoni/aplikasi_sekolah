@@ -54,10 +54,11 @@
                         <div class="form-group">
                             Alamat : {{ $data->alamat }}
                         </div>
-
                     </div>
                     <!-- /.card-body -->
-
+                    <div class="col-4">
+                        <a href="{{ route('orangtuas.index') }}" class="btn btn-danger mb-4 ml-2">Kembali</a>
+                    </div>
                 </div>
                 <!-- /.card -->
             </div>
@@ -68,16 +69,14 @@
                     </div>
                     <div class="card-body">
                         <div class="text-center">
-                            <img class=" img-fluid" src="/image/{{ $data->foto }}">
+                            <img class=" img-fluid" src="/image/{{ $data->foto }}"width="100px" height="100px">
                         </div>
                         {{-- <div class="form-group text-center">
                             NIP : {{ $data->nip }}
                         </div> --}}
                     </div>
                     <!-- /.card-body -->
-                    <div class="col-4">
-                        <a href="{{ route('orangtuas.index') }}" class="btn btn-danger mb-4 ml-2">Kembali</a>
-                    </div>
+
                 </div>
                 <!-- /.card -->
             </div>
