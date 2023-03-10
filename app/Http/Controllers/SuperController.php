@@ -7,12 +7,14 @@ use App\Models\Kelas;
 use App\Models\MataPelajaran;
 use App\Models\Murid;
 use App\Models\Pegawai;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SuperController extends Controller
 {
     public function index()
     {
+        $data = User::all();
         $matapelajaran = MataPelajaran::all();
         $wali = Kelas::all();
         $murid = Murid::count();
@@ -20,6 +22,7 @@ class SuperController extends Controller
         $staf = Admin::count();
         return view('super_admin.index', compact(
             'matapelajaran',
+            'data',
             'wali',
             'murid',
             'pegawai',

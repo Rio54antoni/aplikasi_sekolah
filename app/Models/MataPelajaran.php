@@ -9,10 +9,7 @@ class MataPelajaran extends Model
 {
     use HasFactory;
     protected $table = 'mata_pelajarans';
-    protected $fillable = [
-        'nama',
-        'id_guru'
-    ];
+    protected $fillable = ['nama', 'id_guru'];
     public function mapel()
     {
         return $this->belongsTo(Pegawai::class, 'id_guru');

@@ -16,12 +16,12 @@ class Jadwal extends Model
         'id_kelas',
         'id_mapel'
     ];
-    public function kelas()
-    {
-        return $this->belongsTo(Kelas::class, 'id_kelas');
-    }
     public function mapel()
     {
         return $this->belongsTo(MataPelajaran::class, 'id_mapel');
+    }
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'id_kelas');
     }
 }

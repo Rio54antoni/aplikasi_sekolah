@@ -14,7 +14,7 @@ class ProfilappController extends Controller
      */
     public function index()
     {
-        $data = Profilapp::all();
+        $data = Profilapp::findOrFail(1);
         return view('super_admin.profil_app.index', compact('data'));
     }
 
@@ -69,9 +69,8 @@ class ProfilappController extends Controller
         if ($logo = $request->file('logo')) {
             $destinationPath = 'image/';
             $profileimage = date('YmdHis') . '.' . $logo->getClientOriginalExtension();
-            $image = Image::make($logo)->resize(300, 200,)->save('image/' . $profileimage);
-            // Menyimpan gambar yang sudah diubah ukurannya ke folder tujuan
-            $image->save(public_path($destinationPath . $profileimage));
+            $image = Image::make($logo)->resize(300, 300,)->save('image/images/' . $profileimage);
+            $logo->move($destinationPath, $profileimage);
             $user['logo'] = "$profileimage";
         }
         $user->nama = $request->nama;

@@ -1,6 +1,6 @@
 @extends('master.layouts')
 @section('title')
-    Data Staff
+    Data Jadwal Pembelajaran
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -8,20 +8,13 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 @endpush
 @section('content')
     @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert" data-bs-delay="5000">
-            <i class="bi bi-check-circle-fill me-2"></i>
-            {{ $message }}
-        </div>
-        <script>
-            setTimeout(function() {
-                document.querySelector('.alert').classList.add('fade');
-                document.querySelector('.alert button').click();
-            }, 5000);
-        </script>
     @endif
+
     {{-- kalau ambaik dari section lansuang blok section t paste --}}
     <section class="content">
         <div class="container-fluid">
@@ -29,28 +22,26 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title"> <a href="{{ route('admins.create') }}" class="btn btn-sm btn-success">
-                                    <i class="fas fa-user-plus mr-2">Tambah</i>
+                            <h3 class="card-title"> <a href="{{ route('jadwals.create') }}" class="btn btn-sm btn-success">
+                                    <i class="fas fa-book mr-2">Tambah</i>
+                                </a>
+                                &nbsp;
+                                <a href="{{ route('super_admin.index') }}" class="btn btn-sm btn-secondary">
+                                    kembali
                                 </a>
                             </h3>
-                            &nbsp;
-                            <a href="{{ route('super_admin.index') }}" class="btn btn-sm btn-secondary">
-                                kembali
-                            </a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-hover text-nowrap stafftable">
+                            <table class="table table-bordered table-hover jadwaltable">
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama</th>
-                                        <th>Alamat</th>
-                                        <th>Email</th>
-                                        {{-- <th>Kontak (No.tlp/No.hp)</th> --}}
-                                        <th>Tanggal Lahir</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Foto</th>
+                                        <th>Hari</th>
+                                        <th>Jam Mulai</th>
+                                        <th>Jam Selesai</th>
+                                        <th>Kelas</th>
+                                        <th>Mata Pelajaran</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -73,12 +64,11 @@
     <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jszip/jszip.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    <!-- SweetAlert2 -->
+    <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script type="text/javascript">
         function confirmDelete() {
             if (!confirm("Yakin Ingin Menghapus Data ini ??"))
@@ -87,42 +77,40 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('.stafftable').DataTable({
+            $('.jadwaltable').DataTable({
                 processing: true,
                 serverSide: true,
                 "paging": true,
+                // "lengthChange": false,
+                // "searching": false,
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
-                ajax: "{{ route('admins.index') }}",
+                ajax: "{{ route('jadwals.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                     },
                     {
-                        data: 'nama',
-                        name: 'nama'
+                        data: 'hari',
+                        name: 'hari'
                     },
                     {
-                        data: 'alamat',
-                        name: 'alamat'
+                        data: 'jam_mulai',
+                        name: 'jam_mulai'
                     },
                     {
-                        data: 'email',
-                        name: 'email'
+                        data: 'jam_selesai',
+                        name: 'jam_selesai'
                     },
                     {
-                        data: 'tgl_lahir',
-                        name: 'tgl_lahir'
+                        data: 'id_kelas',
+                        name: 'id_kelas'
                     },
                     {
-                        data: 'id_jk',
-                        name: 'id_jk'
-                    },
-                    {
-                        data: 'foto',
-                        name: 'foto'
+                        data: 'id_mapel',
+                        name: 'id_mapel'
                     },
                     {
                         data: 'action',
@@ -131,9 +119,28 @@
                         orderable: false,
                         searchable: false
                     },
-
                 ],
                 deferRender: true
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            $('.swalDefaultSuccess').ready(function() {
+                var message = '{{ $message }}';
+                if (message) {
+                    Toast.fire({
+                        icon: 'success',
+                        title: message
+                    });
+                }
             });
         });
     </script>

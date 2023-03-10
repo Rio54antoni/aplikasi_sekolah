@@ -101,7 +101,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-6">
+                {{-- <div class="col-lg-3 col-6">
                     <!-- small card -->
                     <div class="small-box bg-danger">
                         <div class="inner">
@@ -116,18 +116,22 @@
                             More info <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
-                </div>
+                </div> --}}
                 <!-- ./col -->
             </div>
             <!-- /.row -->
             <h4 class="mt-4 mb-2">Informasi Akademik</h4>
             <div class="col-md mx-auto">
                 <!-- general form elements -->
-                <div class="card card-primary">
+                <div class="card card-info">
                     <div class="card-header">
                         <h3 class="card-title">Jadwal Belajar</h3>
+                        <div class="d-flex justify-content-end align-items-center">
+                            <a href="{{ route('jadwals.index') }}" class="btn btn-sm btn-success">
+                                <i class="fas fa-clock mr-2">+</i>
+                            </a>
+                        </div>
                     </div>
-                    <!-- /.card-header -->
                     <div class="card-body">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -156,10 +160,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
                 </div>
 
 
@@ -167,11 +167,11 @@
             <div class="row">
                 <div class="col-md-6">
                     <!-- Form Element sizes -->
-                    <div class="card card-success">
+                    <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Mata Pelajaran</h3>
                             <div class="d-flex justify-content-end align-items-center">
-                                <a href="{{ route('mata_pelajarans.create') }}" class="btn btn-sm btn-primary">
+                                <a href="{{ route('mata_pelajarans.create') }}" class="btn btn-sm btn-success">
                                     <i class="fas fa-book mr-2">+</i>
                                 </a>
                             </div>
@@ -222,11 +222,11 @@
 
                 </div>
                 <div class="col-md-6">
-                    <div class="card card-danger">
+                    <div class="card card-dark">
                         <div class="card-header">
                             <h3 class="card-title">kelas</h3>
                             <div class="d-flex justify-content-end align-items-center">
-                                <a href="{{ route('kelas.create') }}" class="btn btn-sm btn-primary">
+                                <a href="{{ route('kelas.create') }}" class="btn btn-sm btn-success">
                                     <i class="fas fa-chalkboard-teacher mr-2">+</i>
                                 </a>
                             </div>

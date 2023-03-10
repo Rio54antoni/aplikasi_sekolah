@@ -1,4 +1,14 @@
 @extends('master.layouts')
+@section('title')
+    Setting App
+@endsection
+@section('breadcrumbs')
+    {{ Breadcrumbs::render() }}
+@endsection
+@push('css')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+@endpush
 @section('content')
     @if ($message = Session::get('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert" data-bs-delay="5000">
@@ -12,32 +22,14 @@
             }, 5000);
         </script>
     @endif
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Setting App</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Setting</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
     <section class="content">
         <div class="container-fluid">
             {{-- mulai logo data profil --}}
             <div class="row">
-                @foreach ($data as $d)
-                @endforeach
                 <div class="col-md-6 offset-md-2">
                     <!-- Profile Image -->
                     <div class="card-deck card-equal-height">
-                        <div class="col-12">
+                        <div class="col mx-auto">
                             <div class="card card-primary card-outline">
                                 <div class="card-body box-profile">
                                     <div class="row">
@@ -45,51 +37,43 @@
                                             <h3 class="card-title text-center">LOGO</h3>
                                         </div>
                                         <div class="col-6 text-right">
-                                            <a href="{{ route('profilapps.edit', $d->id) }}"
+                                            <a href="{{ route('profilapps.edit', $data->id) }}"
                                                 class="btn btn-primary btn-square btn-sm">
                                                 <i class="fas fa-edit text-light">Edit</i>
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="text-center">
-                                        <img class="profile-user-img img-fluid img-circle img-lg"
-                                            src="/image/{{ $d->logo }}">
-                                    </div>
-                                    <h3 class="profile-username text-center">{{ $d->nama }}</h3>
-                                    <p class="text-muted text-center"> Nomor Statistik Sekolah (NSS) :
-                                        {{ $d->nss }}</p>
                                     <hr>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                        </div>
-                        <!-- /.card -->
-                        <!-- About Me Box -->
-                        <div class="col">
-                            <div class="card card-primary">
-                                <div class="card-body">
+                                    <div class="">
+                                        <img class="profile-user-img img-fluid img-circle img-lg"
+                                            src="/image/{{ $data->logo }}">
+                                    </div>
+                                    <h3 class="profile-username text-center">{{ $data->nama }}</h3>
+                                    <p class="text-muted text-center"> Nomor Statistik Sekolah (NSS) :
+                                        {{ $data->nss }}</p>
+                                    <hr>
                                     <strong>Kontak</strong>
-                                    <p class="text">
+                                    <p>
                                     <ul>
                                         <li>
-                                            Email : {{ $d->email }}
+                                            Email : {{ $data->email }}
                                         </li>
                                         <li>
-                                            No.Telepon : {{ $d->notelepon }}
+                                            No.Telepon : {{ $data->notelepon }}
                                         </li>
                                     </ul>
                                     </p>
                                     <hr>
                                     <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
-                                    <p class="text">{{ $d->alamat }}</p>
+                                    <p>{{ $data->alamat }}</p>
                                     <hr>
-                                    Akreditasi : <strong class="text-lg"> {{ $d->akreditasi }}
+                                    Akreditasi : <strong class="text-lg"> {{ $data->akreditasi }}
                                     </strong>
                                 </div>
                                 <!-- /.card-body -->
-                                <!-- /.card -->
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

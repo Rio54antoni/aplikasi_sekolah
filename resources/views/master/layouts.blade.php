@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
-    {{-- buek surang --}}
+
     @stack('css')
 </head>
 
@@ -78,20 +78,6 @@
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/dist/js/adminlte.js') }}"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var alertElements = document.querySelectorAll('.alert');
-            alertElements.forEach(function(alertElement) {
-                var closeButton = alertElement.querySelector('.btn-close');
-                closeButton.addEventListener('click', function() {
-                    alertElement.classList.add('fade');
-                    setTimeout(function() {
-                        alertElement.remove();
-                    }, 500);
-                });
-            });
-        });
-    </script>
     @stack('js')
 </body>
 

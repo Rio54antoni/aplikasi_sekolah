@@ -1,22 +1,11 @@
 @extends('master.layouts')
+@section('title')
+    Tambah Murid
+@endsection
+@section('breadcrumbs')
+    {{ Breadcrumbs::render() }}
+@endsection
 @section('content')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Data Murid</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Data Murid / Tambah</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
     {{-- kalau ambaik dari section lansuang blok section t paste --}}
 
     <section class="content">
