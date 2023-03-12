@@ -31,16 +31,16 @@ class PegawaiController extends Controller
                 </form>';
                     return $btn;
                 })
-                ->addColumn('id_jk', function ($row) {
-                    return ($row->jeniskelamin->nama);
+                ->addColumn('agama', function ($row) {
+                    return ($row->_agama->nama);
                 })
-                ->addColumn('tgl_lahir', function ($row) {
-                    return Carbon::parse($row->tgl_lahir)->isoFormat('dddd, DD MMMM YYYY');
+                ->addColumn('tanggal_lahir', function ($row) {
+                    return Carbon::parse($row->tanggal_lahir)->isoFormat('dddd, DD MMMM YYYY');
                 })
                 ->addColumn('foto', function ($row) {
                     return '<img src="/image/images/' . $row->foto . '" width="50" height="50" />';
                 })
-                ->rawColumns(['action', 'foto', 'tgl_lahir'])
+                ->rawColumns(['action', 'foto', 'tanggal_lahir'])
                 ->make(true);
         }
         return view('super_admin.pegawai.index');
@@ -53,7 +53,7 @@ class PegawaiController extends Controller
     {
         $agama = Agama::all();
         $jabatan = Jabatan::all();
-        $jk = Jenisk::all();
+
         return view('super_admin.pegawai.create', compact('agama', 'jabatan', 'jk'));
     }
 
