@@ -8,19 +8,11 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 @endpush
 @section('content')
     @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert" data-bs-delay="5000">
-            <i class="bi bi-check-circle-fill me-2"></i>
-            {{ $message }}
-        </div>
-        <script>
-            setTimeout(function() {
-                document.querySelector('.alert').classList.add('fade');
-                document.querySelector('.alert button').click();
-            }, 5000);
-        </script>
     @endif
     {{-- kalau ambaik dari section lansuang blok section t paste --}}
     <section class="content">
@@ -30,7 +22,7 @@
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title"> <a href="{{ route('pegawais.create') }}" class="btn btn-sm btn-success">
-                                    <i class="fas fa-user-plus mr-2">Tambah</i>
+                                    <i class="fas fa-users mr-2">+Tambah</i>
                                 </a>
                             </h3>
                             &nbsp;
@@ -49,7 +41,7 @@
                                         <th>Email</th>
                                         {{-- <th>Kontak (No.tlp/No.hp)</th> --}}
                                         <th>Tanggal Lahir</th>
-                                        <th>Jenis Kelamin</th>
+                                        <th>Agama</th>
                                         <th>Foto</th>
                                         <th>Action</th>
                                     </tr>
@@ -113,12 +105,12 @@
                         name: 'email'
                     },
                     {
-                        data: 'tgl_lahir',
-                        name: 'tgl_lahir'
+                        data: 'tanggal_lahir',
+                        name: 'tanggal_lahir'
                     },
                     {
-                        data: 'id_jk',
-                        name: 'id_jk'
+                        data: 'agama',
+                        name: 'agama'
                     },
                     {
                         data: 'foto',
@@ -134,6 +126,26 @@
 
                 ],
                 deferRender: true
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            $('.swalDefaultSuccess').ready(function() {
+                var message = '{{ $message }}';
+                if (message) {
+                    Toast.fire({
+                        icon: 'success',
+                        title: message
+                    });
+                }
             });
         });
     </script>

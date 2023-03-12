@@ -9,31 +9,24 @@ class Pegawai extends Model
 {
     use HasFactory;
     protected $table = 'pegawais';
-    protected $fillable = [
-        'nama',
-        'nip',
-        'alamat',
-        'notelepon',
-        'nohp',
-        'email',
-        'id_jk',
-        'tgl_lahir',
-        'id_agama',
-        'id_jabatan',
-        'foto'
-    ];
-    public function agama()
-    {
-        return $this->belongsTo(Agama::class, 'id_agama');
-    }
+    protected $guarded  = ['id'];
 
+    public function _agama()
+    {
+        return $this->belongsTo(Agama::class, 'agama');
+    }
+    // public function pendidikan()
+    // {
+    //     return $this->belongsTo(Pendidikan::class, 'id_pendidikan');
+    // }
     public function jabatan()
     {
         return $this->belongsTo(Jabatan::class, 'id_jabatan');
     }
+    // public function status()
+    // {
+    //     return $this->belongsTo(status::class, 'id_status');
+    // }
 
-    public function jeniskelamin()
-    {
-        return $this->belongsTo(Jenisk::class, 'id_jk');
-    }
+
 }

@@ -14,29 +14,20 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
-
     @stack('css')
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
     <div class="wrapper">
-
-        <!-- Preloader -->
-        {{-- <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="{{ asset('assets/dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo"
-                height="60" width="60">
-        </div> --}}
-
         <!-- Navbar -->
         @include('master.navbar')
-        <!-- /.navbar -->
-
-        <!-- Main Sidebar Container -->
-
+        {{-- end navbar --}}
+        {{-- sidebar --}}
         @include('master.sidebar')
-        <!-- Content Wrapper. Contains page content -->
+        {{-- end sidebar --}}
+
+        {{-- content header --}}
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
             <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
@@ -49,24 +40,16 @@
                             </ol>
                         </div>
                     </div>
-                </div><!-- /.container-fluid -->
+                </div>
             </section>
-            <!-- /.content-header -->
-
-            <!-- Main content -->
+            {{-- main content --}}
             @yield('content')
             <!-- /.content -->
         </div>
-        <!-- /.content-wrapper -->
-
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
 
         <!-- Main Footer -->
         @include('master.footer')
+        {{-- end footer --}}
     </div>
 
     <!-- jQuery -->
@@ -77,8 +60,8 @@
     <script src="{{ asset('assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/dist/js/adminlte.js') }}"></script>
-
     @stack('js')
+
 </body>
 
 </html>
