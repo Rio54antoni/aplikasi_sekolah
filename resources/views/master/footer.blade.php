@@ -1,7 +1,9 @@
 <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.2.0
+    <div class="col-sm-12 order-sm-1 py-1 text-center text-sm-start">
+        <em><a class="fw-semibold" href="" target="_blank">{{ App\Models\Profilapp::first()->nama }}</a>
+        </em> &copy; <?php
+        $tgl = date('Y');
+        echo $tgl;
+        ?>
     </div>
 </footer>

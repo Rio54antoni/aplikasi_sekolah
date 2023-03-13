@@ -11,16 +11,6 @@
 @endpush
 @section('content')
     @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert" data-bs-delay="5000">
-            <i class="bi bi-check-circle-fill me-2"></i>
-            {{ $message }}
-        </div>
-        <script>
-            setTimeout(function() {
-                document.querySelector('.alert').classList.add('fade');
-                document.querySelector('.alert button').click();
-            }, 5000);
-        </script>
     @endif
     <section class="content">
         <div class="container-fluid">

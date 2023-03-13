@@ -116,6 +116,46 @@
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
         </li>
+        <li class="nav-item dropdown user-menu">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                @if (Auth::check())
+                    <img src="/image/images/{{ Auth::user()->foto }}"class="user-image img-circle elevation-2"
+                        alt="User Image">
+                @endif
+                <span class="d-none d-md-inline">{{ Auth::user()->nama }}</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <!-- User image -->
+                <li class="user-header bg-primary">
+                    @if (Auth::check())
+                        <img src="/image/images/{{ Auth::user()->foto }}"class="img-circle elevation-2 "
+                            alt="user image">
+                    @endif
+                    <p>{{ Auth::user()->nama }}<small>{{ Auth::user()->email }}</small></p>
+                </li>
+                <!-- Menu Body -->
+                <li class="user-body">
+                    <div class="row">
+                        <div class="col text-center">
+                            <small>Role : {{ Auth::user()->role }}</small>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                    <a href="{{ route('users.show', Auth::user()->id) }}" class="btn btn-default btn-flat">Profile</a>
+                    <a href="{{ route('logout.index') }}"class="btn btn-default btn-flat float-right"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <p>Logout</p>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout.index') }}" method="POST"
+                        style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </li>
+            </ul>
+        </li>
         <li class="nav-item">
             <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                 <i class="fas fa-expand-arrows-alt"></i>
