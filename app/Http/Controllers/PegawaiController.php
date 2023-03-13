@@ -38,7 +38,7 @@ class PegawaiController extends Controller
                     return Carbon::parse($row->tanggal_lahir)->isoFormat('dddd, DD MMMM YYYY');
                 })
                 ->addColumn('foto', function ($row) {
-                    return '<img src="/image/images/' . $row->foto . '" width="50" height="50" />';
+                    return '<img src="/image/images/' . $row->foto_diri . '" width="50" height="50" />';
                 })
                 ->rawColumns(['action', 'foto', 'tanggal_lahir'])
                 ->make(true);
@@ -53,8 +53,7 @@ class PegawaiController extends Controller
     {
         $agama = Agama::all();
         $jabatan = Jabatan::all();
-
-        return view('super_admin.pegawai.create', compact('agama', 'jabatan', 'jk'));
+        return view('super_admin.pegawai.create', compact('agama', 'jabatan'));
     }
 
     /**
@@ -62,29 +61,70 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
+        // ddd($request);
         $request->validate([
-            'nama' => 'required|string|max:25',
-            'email' => 'required|string|email|max:55|unique:users',
-            'nip' => 'required|string|max:9',
-            'notelepon' => 'required|string|max:13',
-            'nohp' => 'required|string|max:13',
-            'alamat' => 'required',
-            'id_agama' => 'required',
+            'nama' => 'required|string|max:55',
+            'nik' => 'required|string|max:16',
+            'email' => 'required|string|email|max:30|unique:users',
+            'telepon' => 'required|string|max:13',
+            'tempat_lahir' => 'required|string|max:60',
+            'tanggal_lahir' => 'required',
+            'agama' => 'required',
+            'sts_pernikahan' => 'required',
+            'jenis_kelamin' => 'required',
+            'alamat' => 'required|string|max:64',
+            'nip' => 'required|string|max:18',
+            'tgl_daftar' => 'required',
+            'id_pendidikan' => 'required',
+            'gelar' => 'required',
+            'npwp' => 'required|string|max:16',
             'id_jabatan' => 'required',
-            'id_jk' => 'required',
-            'tgl_lahir' => 'required',
-            'foto' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048'
+            'id_status' => 'required',
+            'foto_diri' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'foto_ktp' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'foto_ijazah' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'foto_npwp' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048'
         ]);
         $input = $request->all();
-        if ($foto = $request->file('foto')) {
+        // foto diri
+        if ($fotoDiri = $request->file('foto_diri')) {
             $destinationPath = 'image/';
-            $profileimage = date('YmdHis') . "." . $foto->getClientOriginalExtension();
-            $image = Image::make($foto)->resize(300, 300)->save('image/images/' . $profileimage);
-            // $image->save(public_path($destinationPath . $profileimage));
-            $foto->move($destinationPath, $profileimage);
-            $input['foto'] = "$profileimage";
+            $profileimageDiri = date('YmdHis') . "_diri." . $fotoDiri->getClientOriginalExtension();
+            $imageDiri = Image::make($fotoDiri)->resize(300, 300)->save('image/images/' . $profileimageDiri);
+            $fotoDiri->move($destinationPath, $profileimageDiri);
+            $input['foto_diri'] = $profileimageDiri;
         } else {
-            $input['foto'] = null;
+            $input['foto_ktp'] = null;
+        }
+        // foto ktp
+        if ($fotoKtp = $request->file('foto_ktp')) {
+            $destinationPath = 'image/';
+            $profileimageKtp = date('YmdHis') . "_ktp." . $fotoKtp->getClientOriginalExtension();
+            Image::make($fotoKtp)->resize(300, 300)->save('image/images/' . $profileimageKtp);
+            $fotoKtp->move($destinationPath, $profileimageKtp);
+            $input['foto_ktp'] = $profileimageKtp;
+        } else {
+            $input['foto_ktp'] = null;
+        }
+        // foto ijazah
+        if ($fotoIjazah = $request->file('foto_ijazah')) {
+            $destinationPath = 'image/';
+            $profileimageIjazah = date('YmdHis') . "_ijazah." . $fotoIjazah->getClientOriginalExtension();
+            Image::make($fotoIjazah)->resize(300, 300)->save('image/images/' . $profileimageIjazah);
+            $fotoIjazah->move($destinationPath, $profileimageIjazah);
+            $input['foto_ijazah'] = $profileimageIjazah;
+        } else {
+            $input['foto_ijazah'] = null;
+        }
+        // foto npwp
+        if ($fotoNpwp = $request->file('foto_npwp')) {
+            $destinationPath = 'image/';
+            $profileimageNpwp = date('YmdHis') . "_npwp." . $fotoNpwp->getClientOriginalExtension();
+            Image::make($fotoNpwp)->resize(300, 300)->save('image/images/' . $profileimageNpwp);
+            $fotoNpwp->move($destinationPath, $profileimageNpwp);
+            $input['foto_npwp'] = $profileimageNpwp;
+        } else {
+            $input['foto_npwp'] = null;
         }
         try {
             Pegawai::create($input);

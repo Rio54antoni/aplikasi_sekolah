@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('foto_npwp')->nullable();
             $table->string('jenis_kelamin'); //Laki-laki dan Perempuan
             $table->date('tanggal_lahir');
+            $table->string('tempat_lahir');
             $table->string('agama'); // Islam, Kristen, Hindu, Buddha, Katolik, Kong Hu Chu dan Dll
             $table->string('nip');
             $table->string('id_pendidikan');
