@@ -66,11 +66,11 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="telepon">No. Telepon / WA</label>
-                                                <input name="telepon" value="{{ old('telepon') }}" type="number"
-                                                    class="form-control  @error('telepon') is-invalid @enderror"
-                                                    id="telepon" placeholder="Masukan no telepon">
-                                                @error('telepon')
+                                                <label for="telpon">No. Telpon / WA</label>
+                                                <input name="telpon" value="{{ old('telpon') }}" type="number"
+                                                    class="form-control  @error('telpon') is-invalid @enderror"
+                                                    id="telpon" placeholder="Masukan no telpon">
+                                                @error('telpon')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>

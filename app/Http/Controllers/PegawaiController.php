@@ -66,7 +66,7 @@ class PegawaiController extends Controller
             'nama' => 'required|string|max:55',
             'nik' => 'required|string|max:16',
             'email' => 'required|string|email|max:30|unique:users',
-            'telepon' => 'required|string|max:13',
+            'telpon' => 'required|string|max:13',
             'tempat_lahir' => 'required|string|max:60',
             'tanggal_lahir' => 'required',
             'agama' => 'required',
@@ -132,7 +132,7 @@ class PegawaiController extends Controller
                 ->with('success', 'Data Berhasil Di Tambahkan');
         } catch (\Exception $e) {
             return redirect()->back()
-                ->withErrors(['messages' => 'Gagal Menyimpan Data'])
+                ->withErrors(['message' => 'Gagal menyimpan data. Silahkan coba lagi.'])
                 ->withInput();
         }
     }
@@ -153,9 +153,8 @@ class PegawaiController extends Controller
     {
         $agama = Agama::all();
         $jabatan = Jabatan::all();
-        $jk = Jenisk::all();
         $data = Pegawai::findOrFail($id);
-        return view('super_admin.pegawai.edit', compact('data', 'agama', 'jabatan', 'jk'));
+        return view('super_admin.pegawai.edit', compact('data', 'agama', 'jabatan'));
     }
 
     /**
@@ -164,42 +163,77 @@ class PegawaiController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama' => 'required|string|max:25',
-            'nip' => 'required|string|max:9',
-            'alamat' => 'required',
-            'notelepon' => 'required|string|max:13',
-            'nohp' => 'required|string|max:13',
-            'email' => 'required|string|email|max:55|unique:users,email,' . $id,
-            'id_agama' => 'required',
+            'nama' => 'required|string|max:55',
+            'nik' => 'required|string|max:16',
+            'email' => 'required|string|email|max:30|unique:users,email,' . $id,
+            'telpon' => 'required|string|max:13',
+            'tempat_lahir' => 'required|string|max:60',
+            'tanggal_lahir' => 'required',
+            'agama' => 'required',
+            'sts_pernikahan' => 'required',
+            'jenis_kelamin' => 'required',
+            'alamat' => 'required|string|max:64',
+            'nip' => 'required|string|max:18',
+            'tgl_daftar' => 'required',
+            'id_pendidikan' => 'required',
+            'gelar' => 'required',
+            'npwp' => 'required|string|max:16',
             'id_jabatan' => 'required',
-            'id_jk' => 'required',
-            'tgl_lahir' => 'required',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ], [
-            'nama.required' => 'Nama user tidak boleh kosong',
-            'email.required' => 'Email tidak boleh kosong',
-            'foto.required' => 'Format file tidak didukung'
+            'id_status' => 'required',
+            'foto_diri' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'foto_ktp' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'foto_ijazah' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'foto_npwp' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048'
         ]);
         $user = Pegawai::findOrFail($id);
-        if ($foto = $request->file('foto')) {
+        if ($fotoDiri = $request->file('foto_diri')) {
             $destinationPath = 'image/';
-            $profileimage = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
-            $image = Image::make($foto)->resize(300, 200,)->save('image/images/' . $profileimage);
-            // Menyimpan gambar yang sudah diubah ukurannya ke folder tujuan
-            // $image->save(public_path($destinationPath . $profileimage));
-            $foto->move($destinationPath, $profileimage);
-            $user['foto'] = "$profileimage";
+            $profileimageDiri = date('YmdHis') . "_diri." . $fotoDiri->getClientOriginalExtension();
+            $imageDiri = Image::make($fotoDiri)->resize(300, 300)->save('image/images/' . $profileimageDiri);
+            $fotoDiri->move($destinationPath, $profileimageDiri);
+            $user['foto_diri'] = $profileimageDiri;
+        }
+        // foto ktp
+        if ($fotoKtp = $request->file('foto_ktp')) {
+            $destinationPath = 'image/';
+            $profileimageKtp = date('YmdHis') . "_ktp." . $fotoKtp->getClientOriginalExtension();
+            Image::make($fotoKtp)->resize(300, 300)->save('image/images/' . $profileimageKtp);
+            $fotoKtp->move($destinationPath, $profileimageKtp);
+            $user['foto_ktp'] = $profileimageKtp;
+        }
+        // foto ijazah
+        if ($fotoIjazah = $request->file('foto_ijazah')) {
+            $destinationPath = 'image/';
+            $profileimageIjazah = date('YmdHis') . "_ijazah." . $fotoIjazah->getClientOriginalExtension();
+            Image::make($fotoIjazah)->resize(300, 300)->save('image/images/' . $profileimageIjazah);
+            $fotoIjazah->move($destinationPath, $profileimageIjazah);
+            $user['foto_ijazah'] = $profileimageIjazah;
+        }
+        // foto npwp
+        if ($fotoNpwp = $request->file('foto_npwp')) {
+            $destinationPath = 'image/';
+            $profileimageNpwp = date('YmdHis') . "_npwp." . $fotoNpwp->getClientOriginalExtension();
+            Image::make($fotoNpwp)->resize(300, 300)->save('image/images/' . $profileimageNpwp);
+            $fotoNpwp->move($destinationPath, $profileimageNpwp);
+            $user['foto_npwp'] = $profileimageNpwp;
         }
         $user->nama = $request->nama;
-        $user->nip = $request->nip;
-        $user->alamat = $request->alamat;
-        $user->notelepon = $request->notelepon;
-        $user->nohp = $request->nohp;
+        $user->nik = $request->nik;
         $user->email = $request->email;
-        $user->id_agama = $request->id_agama;
+        $user->telpon = $request->telpon;
+        $user->tempat_lahir = $request->tempat_lahir;
+        $user->tanggal_lahir = $request->tanggal_lahir;
+        $user->agama = $request->agama;
+        $user->sts_pernikahan = $request->sts_pernikahan;
+        $user->jenis_kelamin = $request->jenis_kelamin;
+        $user->alamat = $request->alamat;
+        $user->nip = $request->nip;
+        $user->tgl_daftar = $request->tgl_daftar;
+        $user->id_pendidikan = $request->id_pendidikan;
+        $user->gelar = $request->gelar;
+        $user->npwp = $request->npwp;
         $user->id_jabatan = $request->id_jabatan;
-        $user->id_jk = $request->id_jk;
-        $user->tgl_lahir = $request->tgl_lahir;
+        $user->id_status = $request->id_status;
         $user->save();
         return redirect()->route('pegawais.index')
             ->with('success', 'Data Berhasil Di Perbaharui');
