@@ -32,12 +32,14 @@
                             </h3>
                         </div>
                         <!-- /.card-header -->
+
                         <div class="card-body">
                             <table class="table table-bordered table-hover jadwaltable">
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Hari</th>
+                                        <th>Jam Ke</th>
                                         <th>Jam Mulai</th>
                                         <th>Jam Selesai</th>
                                         <th>Kelas</th>
@@ -81,8 +83,8 @@
                 processing: true,
                 serverSide: true,
                 "paging": true,
-                // "lengthChange": false,
-                // "searching": false,
+                "lengthChange": true,
+                "searching": true,
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,
@@ -95,6 +97,10 @@
                     {
                         data: 'hari',
                         name: 'hari'
+                    },
+                    {
+                        data: 'jam',
+                        name: 'jam'
                     },
                     {
                         data: 'jam_mulai',
@@ -124,6 +130,8 @@
             });
         });
     </script>
+
+    {{-- script untuk alert    --}}
     <script>
         $(document).ready(function() {
             var Toast = Swal.mixin({

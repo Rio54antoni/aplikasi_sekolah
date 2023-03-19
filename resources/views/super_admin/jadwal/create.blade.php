@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label>Hari</label>
                                 <select name="hari" class="form-control @error('hari') is-invalid @enderror">
-                                    <option> Pilih </option>
+                                    <option>-- Pilih hari --</option>
                                     <option value="Senin" {{ old('hari') == 'Senin' ? 'selected' : null }}>
                                         Senin
                                     </option>
@@ -43,6 +43,41 @@
                                     </option>
                                 </select>
                                 @error('hari')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label>Jam Ke</label>
+                                <select name="jam" class="form-control @error('jam') is-invalid @enderror">
+                                    <option>-- Pilih jam pelajaran--</option>
+                                    <option value="1" {{ old('jam') == '1' ? 'selected' : null }}>
+                                        1
+                                    </option>
+                                    <option value="2" {{ old('jam') == '2' ? 'selected' : null }}>
+                                        2
+                                    </option>
+                                    <option value="3" {{ old('jam') == '3' ? 'selected' : null }}>3
+                                    </option>
+                                    <option value="4" {{ old('jam') == '4' ? 'selected' : null }}>
+                                        4
+                                    </option>
+                                    <option value="5" {{ old('jam') == '5' ? 'selected' : null }}>
+                                        5
+                                    </option>
+                                    <option value="6" {{ old('jam') == '6' ? 'selected' : null }}>
+                                        6
+                                    </option>
+                                    <option value="7" {{ old('jam') == '7' ? 'selected' : null }}>
+                                        7
+                                    </option>
+                                    <option value="8" {{ old('jam') == '8' ? 'selected' : null }}>
+                                        8
+                                    </option>
+                                    <option value="9" {{ old('jam') == '9' ? 'selected' : null }}>9
+                                    </option>
+                                </select>
+                                @error('jam')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -69,12 +104,10 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group">
-                                <label>Kelas</label>
-                                <select multiple name="id_kelas"
-                                    class="form-control @error('id_kelas') is-invalid @enderror">
-                                    <option>Pilih</option>
+                                <label>Kelas <span class="text-danger">*</span></label>
+                                <select name="id_kelas" class="form-control @error('id_kelas') is-invalid @enderror">
+                                    <option>-- Pilih kelas --</option>
                                     @foreach ($kel as $k)
                                         <option
                                             value="{{ $k->id }}"{{ old('id_kelas') == $k->id ? 'selected' : null }}>
@@ -86,14 +119,13 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Mata Pelajaran</label>
-                                <select multiple name="id_mapel"
-                                    class="form-control @error('id_mapel') is-invalid @enderror">
-                                    <option>Pilih</option>
-                                    @foreach ($matap as $tap)
+                                <label>Mata Pelajaran <span class="text-danger">*</span></label>
+                                <select name="id_mapel" class="form-control @error('id_mapel') is-invalid @enderror">
+                                    <option>-- Pilih mata Pelajaran --</option>
+                                    @foreach ($matap as $ag)
                                         <option
-                                            value="{{ $tap->id }}"{{ old('id_mapel') == $tap->id ? 'selected' : null }}>
-                                            {{ $tap->nama }}</option>
+                                            value="{{ $ag->id }}"{{ old('id_mapel') == $ag->id ? 'selected' : null }}>
+                                            {{ $ag->nama }}</option>
                                     @endforeach
                                 </select>
                                 @error('id_mapel')

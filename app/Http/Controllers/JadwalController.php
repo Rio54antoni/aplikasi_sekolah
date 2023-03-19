@@ -22,8 +22,7 @@ class JadwalController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn =  '<a href="' . route('jadwals.show', $row->id) . '"class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Show"><i class="fas fa-info-circle"></i></a> |';
-                    $btn = $btn . '<a href="' . route('jadwals.edit', $row->id) . '"class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
+                    $btn =  '<a href="' . route('jadwals.edit', $row->id) . '"class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
                     $btn = $btn . '<form action="' . route('jadwals.destroy', $row->id) . '" method="POST" onsubmit="confirmDelete()" style="display: inline-block">
                     ' . method_field('DELETE') . csrf_field() . '
                     <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></button>
@@ -31,10 +30,10 @@ class JadwalController extends Controller
                     return $btn;
                 })
                 ->addColumn('id_kelas', function ($row) {
-                    return ($row->kelas->nama);
+                    return ($row->kelas->nama ?? 'Belum di pilih');
                 })
                 ->addColumn('id_mapel', function ($row) {
-                    return ($row->mapel->nama);
+                    return ($row->mapel->nama ?? 'Belum di pilih');
                 })
                 ->rawColumns(['action'])
                 ->make(true);

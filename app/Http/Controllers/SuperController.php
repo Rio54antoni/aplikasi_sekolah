@@ -17,6 +17,7 @@ class SuperController extends Controller
         $data = User::all();
         $matapelajaran = MataPelajaran::all();
         $wali = Kelas::all();
+        $waliklas = Pegawai::all();
         $murid = Murid::count();
         $pegawai = Pegawai::count();
         $staf = Admin::count();
@@ -24,6 +25,7 @@ class SuperController extends Controller
             'matapelajaran',
             'data',
             'wali',
+            'waliklas',
             'murid',
             'pegawai',
             'staf'

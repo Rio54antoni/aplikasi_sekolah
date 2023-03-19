@@ -47,6 +47,35 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <p>
+                            Penjadwalan
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('jadwals.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Jadwal</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./index2.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Mata Pelajaran</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('kelas.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Kelas</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

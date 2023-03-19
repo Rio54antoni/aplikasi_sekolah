@@ -132,5 +132,24 @@ Breadcrumbs::for('jadwals.edit', function ($trail, $user) {
     $trail->parent('jadwals.index');
     $trail->push('Edit', route('jadwals.edit', $user));
 });
+//kelas
+Breadcrumbs::for('kelas.index', function ($trail) {
+    $trail->parent('super_admin.index');
+    $trail->push('Informasi Kelas', route('kelas.index'));
+});
+Breadcrumbs::for('kelas.create', function ($trail) {
+    $trail->parent('kelas.index');
+    $trail->push('Tambah', route('kelas.create'));
+});
+$user = User::find(1);
+Breadcrumbs::for('kelas.show', function ($trail, $user) {
+    $trail->parent('kelas.index');
+    $trail->push('Show', route('kelas.show', $user));
+});
+$user = User::find(1);
+Breadcrumbs::for('kelas.edit', function ($trail, $user) {
+    $trail->parent('kelas.index');
+    $trail->push('Edit', route('kelas.edit', $user));
+});
 
 //////Super admin End Menu

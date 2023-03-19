@@ -66,7 +66,7 @@
                             <p class="text-muted">NIK : {{ $data->nik }}</p>
                             <p class="text-muted">Tempat, tanggal lahir : {{ $data->tempat_lahir }},
                                 {{ \Carbon\Carbon::parse($data->tanggal_lahir)->isoFormat(' DD MMMM YYYY') }}</p>
-                            <p class="text-muted">Agama : {{ $data->agama }}</p>
+                            <p class="text-muted">Agama : {{ $data->_agama->nama }}</p>
                             <p class="text-muted">Jenis kelamin : {{ $data->jenis_kelamin }}</p>
                             <p class="text-muted">Status Pernikahan : {{ $data->sts_pernikahan }}</p>
                             <hr>
