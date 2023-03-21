@@ -9,25 +9,22 @@ class Murid extends Model
 {
     use HasFactory;
     protected $table = 'murids';
-    protected $fillable = [
-        'nama',
-        'nis',
-        'alamat',
-        'notelepon',
-        'nohp',
-        'email',
-        'id_jk',
-        'tgl_lahir',
-        'id_agama',
-        'foto'
-    ];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+
     public function agama()
     {
         return $this->belongsTo(Agama::class, 'id_agama');
     }
-
-    public function jeniskelamin()
+    public function pekerjaan_ayah()
     {
-        return $this->belongsTo(Jenisk::class, 'id_jk');
+        return $this->belongsTo(Kerja::class, 'kerja_ayah');
+    }
+    public function pekerjaan_ibu()
+    {
+        return $this->belongsTo(Kerja::class, 'kerja_ibu');
+    }
+    public function pekerjaan_wali()
+    {
+        return $this->belongsTo(Kerja::class, 'kerja_wali');
     }
 }

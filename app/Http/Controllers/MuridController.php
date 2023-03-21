@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agama;
 use App\Models\Jenisk;
+use App\Models\Kerja;
 use App\Models\Murid;
 use Carbon\Carbon;
 use Intervention\Image\Facades\Image;
@@ -31,16 +32,13 @@ class MuridController extends Controller
                     </form>';
                     return $btn;
                 })
-                ->addColumn('id_jk', function ($row) {
-                    return ($row->jeniskelamin->nama);
-                })
                 ->addColumn('tgl_lahir', function ($row) {
                     return Carbon::parse($row->tgl_lahir)->isoFormat('dddd, DD MMMM YYYY');
                 })
-                ->addColumn('foto', function ($row) {
-                    return '<img src="/image/images/' . $row->foto . '" width="50" height="50" />';
+                ->addColumn('foto_diri', function ($row) {
+                    return '<img src="/image/images/' . $row->foto_diri . '" width="50" height="50" />';
                 })
-                ->rawColumns(['action', 'foto', 'tgl_lahir'])
+                ->rawColumns(['action', 'foto_diri', 'tgl_lahir'])
                 ->make(true);
         }
         return view('super_admin.murid.index');
@@ -52,8 +50,8 @@ class MuridController extends Controller
     public function create()
     {
         $agama = Agama::all();
-        $jk = Jenisk::all();
-        return view('super_admin.murid.create', compact('agama', 'jk'));
+        $kerja = Kerja::all();
+        return view('super_admin.murid.create', compact('agama', 'kerja'));
     }
 
     /**
@@ -62,29 +60,37 @@ class MuridController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:25',
-            'email' => 'required|string|email|max:55|unique:users',
-            'nis' => 'required|string|max:9',
-            'notelepon' => 'required|string|max:13',
-            'nohp' => 'required|string|max:13',
-            'alamat' => 'required',
-            'id_jk' => 'required',
-            'id_agama' => 'required',
-            'tgl_lahir' => 'required',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'nama' => 'sometimes|required|string|max:25',
+            'email' => 'sometimes|required|string|email|max:55|unique:murids',
+            'nis' => 'sometimes|required|string|max:9',
+            'nohp' => 'sometimes|required|string|max:13',
+            'alamat' => 'sometimes|required',
+            'jenis_kelamin' => 'required',
+            'id_agama' => 'sometimes|required',
+            'tempat_lahir' => 'sometimes|required',
+            'tgl_lahir' => 'sometimes|required',
+            'ayah' => 'sometimes|nullable|string|max:25',
+            'ibu' => 'sometimes|nullable|string|max:25',
+            'wali' => 'sometimes|nullable|string|max:25',
+            'kerja_ayah' => 'sometimes|nullable|string',
+            'kerja_ibu' => 'sometimes|nullable|string',
+            'kerja_wali' => 'sometimes|nullable|string',
+            'nohp_ortu' => 'sometimes|nullable',
+            'tgl_daftar' => 'sometimes|required',
+            'foto_diri' => 'sometimes|required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $input = $request->all();
-        if ($foto = $request->file('foto')) {
+        if ($foto = $request->file('foto_diri')) {
             $destinationPath = 'image/';
             $profileimage = date('YmdHis') . "." . $foto->getClientOriginalExtension();
             $image = Image::make($foto)->resize(300, 200,)->save('image/images/' . $profileimage);
             // Menyimpan gambar yang sudah diubah ukurannya ke folder tujuan
             // $image->save(public_path($destinationPath . $profileimage));
             $foto->move($destinationPath, $profileimage);
-            $input['foto'] = "$profileimage";
+            $input['foto_diri'] = "$profileimage";
         } else {
-            $input['foto'] = null;
+            $input['foto_diri'] = null;
         }
         try {
             Murid::create($input);
@@ -113,8 +119,8 @@ class MuridController extends Controller
     {
         $data = Murid::findOrFail($id);
         $agama = Agama::all();
-        $jk = Jenisk::all();
-        return view('super_admin.murid.edit', compact('data', 'agama', 'jk'));
+        $kerja = Kerja::all();
+        return view('super_admin.murid.edit', compact('data', 'agama', 'kerja'));
     }
 
     /**
@@ -123,40 +129,52 @@ class MuridController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama' => 'required|string|max:25',
-            'nis' => 'required|string|max:9',
-            'alamat' => 'required',
-            'notelepon' => 'required|string|max:13',
-            'nohp' => 'required|string|max:13',
-            'email' => 'required|string|email|max:55|unique:users,email,' . $id,
-            'id_jk' => 'required',
-            'id_agama' => 'required',
-            'tgl_lahir' => 'required',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ], [
-            'nama.required' => 'Nama user tidak boleh kosong',
-            'email.required' => 'Email tidak boleh kosong',
-            'foto.required' => 'Format file tidak didukung'
+            'nama' => 'sometimes|required|string|max:25',
+            'email' => 'required|string|email|max:55|unique:murids,email,' . $id,
+            'nis' => 'required|string|max:9|unique:murids,nis,' . $id,
+            'nohp' => 'sometimes|required|string|max:13',
+            'alamat' => 'sometimes|required',
+            'jenis_kelamin' => 'required',
+            'id_agama' => 'sometimes|required',
+            'tempat_lahir' => 'sometimes|required',
+            'tgl_lahir' => 'sometimes|required',
+            'ayah' => 'sometimes|nullable|string|max:25',
+            'ibu' => 'sometimes|nullable|string|max:25',
+            'wali' => 'sometimes|nullable|string|max:25',
+            'kerja_ayah' => 'sometimes|nullable|string',
+            'kerja_ibu' => 'sometimes|nullable|string',
+            'kerja_wali' => 'sometimes|nullable|string',
+            'nohp_ortu' => 'sometimes|nullable',
+            'tgl_daftar' => 'sometimes|required',
+            'foto' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         $user = Murid::findOrFail($id);
-        if ($foto = $request->file('foto')) {
+        if ($foto = $request->file('foto_diri')) {
             $destinationPath = 'image/';
             $profileimage = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
             $image = Image::make($foto)->resize(300, 200,)->save('image/images/' . $profileimage);
             // Menyimpan gambar yang sudah diubah ukurannya ke folder tujuan
             // $image->save(public_path($destinationPath . $profileimage));
             $foto->move($destinationPath, $profileimage);
-            $user['foto'] = "$profileimage";
+            $user['foto_diri'] = "$profileimage";
         }
         $user->nama = $request->nama;
-        $user->nis = $request->nis;
-        $user->alamat = $request->alamat;
-        $user->notelepon = $request->notelepon;
-        $user->nohp = $request->nohp;
         $user->email = $request->email;
-        $user->id_jk = $request->id_jk;
-        $user->tgl_lahir = $request->tgl_lahir;
+        $user->nis = $request->nis;
+        $user->nohp = $request->nohp;
+        $user->alamat = $request->alamat;
+        $user->jenis_kelamin = $request->jenis_kelamin;
         $user->id_agama = $request->id_agama;
+        $user->tempat_lahir = $request->tempat_lahir;
+        $user->tgl_lahir = $request->tgl_lahir;
+        $user->ayah = $request->ayah;
+        $user->kerja_ayah = $request->kerja_ayah;
+        $user->ibu = $request->ibu;
+        $user->kerja_ibu = $request->kerja_ibu;
+        $user->wali = $request->wali;
+        $user->kerja_wali = $request->kerja_wali;
+        $user->nohp_ortu = $request->nohp_ortu;
+        $user->tgl_daftar = $request->tgl_daftar;
         $user->save();
         return redirect()->route('murids.index')
             ->with('success', 'Data Berhasil Di Perbaharui');
@@ -170,6 +188,6 @@ class MuridController extends Controller
         $data = Murid::findOrFail($id);
         $data->delete();
         return redirect()->route('murids.index')
-            ->with('success', 'Data murid terhapus ');
+            ->with('success', 'Data berhasil dihapus ');
     }
 }

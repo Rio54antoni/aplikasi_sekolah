@@ -31,6 +31,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('murids.index') }}" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <p>
+                            Siswa
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item {{ request()->routeIs('users.*') ? 'active' : '' }} active">
                     <a href="{{ route('users.index') }}" class="nav-link">
                         <i class="fas fa-cog"></i>

@@ -14,6 +14,7 @@ class KerjaSeeder extends Seeder
     public function run(): void
     {
         Kerja::create(['nama' => 'Pekerja Harian Lepas']);
+        Kerja::create(['nama' => 'Ibu Rumah Tangga']);
         Kerja::create(['nama' => 'Buruh Petani']);
         Kerja::create(['nama' => 'Teknisi']);
         Kerja::create(['nama' => 'Pengajar']);
@@ -22,7 +23,6 @@ class KerjaSeeder extends Seeder
         Kerja::create(['nama' => 'Insinyur']);
         Kerja::create(['nama' => 'Arsitek']);
         Kerja::create(['nama' => 'Programmer']);
-        Kerja::create(['nama' => 'Desainer Grafis']);
         Kerja::create(['nama' => 'Tukang Kayu']);
         Kerja::create(['nama' => 'Tukang Las']);
         Kerja::create(['nama' => 'Nelayan']);
