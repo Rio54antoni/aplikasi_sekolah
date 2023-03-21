@@ -33,10 +33,6 @@
                                     <i class="fas fa-user-plus mr-2">Tambah</i>
                                 </a>
                             </h3>
-                            &nbsp;
-                            <a href="{{ route('super_admin.index') }}" class="btn btn-sm btn-secondary">
-                                kembali
-                            </a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

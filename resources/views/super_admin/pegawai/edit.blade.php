@@ -44,9 +44,9 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="nik">NIK<span class="text-danger">*</span></label>
-                                                <input name="nik" value="{{ old('nik', $data->nik) }}" type="number"
-                                                    class="form-control  @error('nik') is-invalid @enderror" id="nik"
-                                                    placeholder="NIK : max 13 angka ">
+                                                <input name="nik" value="{{ old('nik', $data->nik) }}" type="text"
+                                                    pattern="\d+" class="form-control  @error('nik') is-invalid @enderror"
+                                                    id="nik" placeholder="NIK : max 13 angka ">
                                                 @error('nik')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -70,7 +70,7 @@
                                             <div class="form-group">
                                                 <label for="telpon">No. Telpon / WA</label>
                                                 <input name="telpon" value="{{ old('telpon', $data->telpon) }}"
-                                                    type="number"
+                                                    type="text" pattern="\d+"
                                                     class="form-control  @error('telpon') is-invalid @enderror"
                                                     id="telpon" placeholder="Masukan no telpon">
                                                 @error('telpon')
@@ -132,7 +132,7 @@
                                                     class="form-control @error('sts_pernikahan') is-invalid @enderror">
                                                     <option>-- Pilih Status --</option>
                                                     <option
-                                                        value="Sudah menikah"{{ old('sts_pernikahan', $data->sts_pernikahan) == 'Sudah Menikah' ? 'selected' : null }}>
+                                                        value="Sudah menikah"{{ old('sts_pernikahan', $data->sts_pernikahan) == 'Sudah menikah' ? 'selected' : null }}>
                                                         Sudah Menikah</option>
                                                     <option
                                                         value="Belum Menikah"{{ old('sts_pernikahan', $data->sts_pernikahan) == 'Belum Menikah' ? 'selected' : null }}>
@@ -183,7 +183,7 @@
                                             <div class="form-group">
                                                 <label for="nip">NIP<span class="text-danger">*</span></label>
                                                 <input name="nip" value="{{ old('nip', $data->nip) }}"
-                                                    type="number"
+                                                    type="text" pattern="\d+"
                                                     class="form-control  @error('nip') is-invalid @enderror"
                                                     id="nip" placeholder="NIP Max 9 Angka">
                                                 @error('nip')
@@ -253,7 +253,7 @@
                                             <div class="form-group">
                                                 <label for="npwp">NPWP<span class="text-danger">*</span></label>
                                                 <input name="npwp" value="{{ old('npwp', $data->npwp) }}"
-                                                    type="number"
+                                                    type="text" pattern="\d+"
                                                     class="form-control  @error('npwp') is-invalid @enderror"
                                                     id="npwp" placeholder="NIP Max 9 Angka">
                                                 @error('npwp')
@@ -396,18 +396,19 @@
                                 </div>
                             </div>
                             <em>
-                                * upload foto jika ingin menganti foto yang telah disimpan
+                                * upload foto boleh dilakukan, jika ingin menganti foto yang telah disimpan atau di
+                                tampilkan !!
                             </em>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">
-                                Simpan
-                            </button>
-                            &nbsp;
                             <a href="{{ route('pegawais.index') }}" class="btn btn-danger">
                                 Batal
                             </a>
+                            &nbsp;
+                            <button type="submit" class="btn btn-primary">
+                                Simpan
+                            </button>
                         </div>
                     </form>
                 </div>

@@ -24,14 +24,14 @@
                 <div class="col-md-3">
 
                     <!-- Profile Image -->
-                    <div class="card card-primary card-outline">
+                    <div class="card card-warning card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <img class="profile-user-img img-fluid img-circle"
                                     src="/image/images/{{ $data->foto_diri }} " alt="User profile picture" height="120px">
                             </div>
-                            <h3 class="profile-username text-center">{{ $data->nama }}</h3>
-                            <p class="text-muted text-center">NIP : {{ $data->nip }}</p>
+                            <h3 class="profile-username text-center"><label for="">{{ $data->nama }}</label></h3>
+                            <p class="text-muted text-center"><label for="">NIP :</label> {{ $data->nip }}</p>
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
                                     <i class="fas fa-sm fa-phone"></i><b> Contact :</b>
@@ -59,24 +59,34 @@
                         </div>
                         <div class="card-body">
                             <strong><i class="far fa-file-alt mr-1"></i> Personal</strong>
-                            <p class="text-muted ">Nama : {{ $data->nama }}
-                            <p class="float-right text-muted"> NPWP :
-                                {{ $data->npwp }}</p>
+                            <p class="text-muted ">
+                                <label for="">Nama :</label>
+                                {{ $data->nama }}
+                            <p class="float-right text-muted">
+                                <label for="">NPWP :</label>
+                                {{ $data->npwp ?? '- belum ada' }}
                             </p>
-                            <p class="text-muted">NIK : {{ $data->nik }}</p>
-                            <p class="text-muted">Tempat, tanggal lahir : {{ $data->tempat_lahir }},
+                            </p>
+                            <p class="text-muted"> <label for="">NIK :</label>
+                                {{ $data->nik }}</p>
+                            <p class="text-muted"> <label for="">Tempat, tanggal lahir :</label>
+                                {{ $data->tempat_lahir }},
                                 {{ \Carbon\Carbon::parse($data->tanggal_lahir)->isoFormat(' DD MMMM YYYY') }}</p>
-                            <p class="text-muted">Agama : {{ $data->_agama->nama }}</p>
-                            <p class="text-muted">Jenis kelamin : {{ $data->jenis_kelamin }}</p>
-                            <p class="text-muted">Status Pernikahan : {{ $data->sts_pernikahan }}</p>
+                            <p class="text-muted"> <label for="">Agama :</label> {{ $data->_agama->nama }}</p>
+                            <p class="text-muted"> <label for="">Jenis kelamin : </label>{{ $data->jenis_kelamin }}
+                            </p>
+                            <p class="text-muted"><label for="">Status Pernikahan :
+                                </label>{{ $data->sts_pernikahan }}</p>
                             <hr>
                             <strong><i class="fas fa-book mr-1"></i> Kepegawaian</strong>
-                            <p class="text-muted ">Jabatan : {{ $data->jabatan->nama }}
-                            <p class="float-right text-muted ">Tanggal terdaftar :
+                            <p class="text-muted "> <label for="">Jabatan
+                                    :</label>{{ $data->jabatan->nama ?? 'belum di pilih' }}
+                            <p class="float-right text-muted "> <label for="">Tanggal daftar :</label>
                                 {{ \Carbon\Carbon::parse($data->tgl_daftar)->isoFormat('dddd DD MMMM YYYY') }}</p>
                             </p>
-                            <p class="text-muted ">Status : {{ $data->id_status }}</p>
-                            <p class="text-muted">Pendidikan (gelar) : {{ $data->id_pendidikan }} ({{ $data->gelar }})
+                            <p class="text-muted "> <label for="">Status :</label>{{ $data->id_status }}</p>
+                            <p class="text-muted"> <label for="">Pendidikan (gelar)
+                                    :</label>{{ $data->id_pendidikan }} ({{ $data->gelar }})
                             </p>
                             <hr>
                             <strong><i class="fas fa-map-marker-alt mr-1"></i> Alamat</strong>
@@ -86,6 +96,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-2">
+                                        <label for="">Foto {{ $data->nama }}</label>
                                         <a href="/image/{{ $data->foto_diri }}" data-toggle="lightbox"
                                             data-title="Foto Pegawai" data-gallery="gallery">
                                             <img src="/image/images/{{ $data->foto_diri }} " class="img-fluid mb-2"
@@ -93,6 +104,7 @@
                                         </a>
                                     </div>
                                     <div class="col-sm-2">
+                                        <label for="">Foto KTP</label>
                                         <a href="/image/{{ $data->foto_ktp }}" data-toggle="lightbox" data-title="Foto KTP"
                                             data-gallery="gallery">
                                             <img src="/image/images/{{ $data->foto_ktp }} " class="img-fluid mb-2"
@@ -100,6 +112,7 @@
                                         </a>
                                     </div>
                                     <div class="col-sm-2">
+                                        <label for="">Foto Ijazah</label>
                                         <a href="/image/{{ $data->foto_ijazah }}" data-toggle="lightbox"
                                             data-title="Foto Ijazah" data-gallery="gallery">
                                             <img src="/image/images/{{ $data->foto_ijazah }} " class="img-fluid mb-2"
@@ -107,6 +120,7 @@
                                         </a>
                                     </div>
                                     <div class="col-sm-2">
+                                        <label for="">Foto NPWP</label>
                                         @if ($data->foto_npwp)
                                             <a href="/image/{{ $data->foto_npwp }}" data-toggle="lightbox"
                                                 data-title="Foto NPWP" data-gallery="gallery">
@@ -114,9 +128,9 @@
                                                     alt="black sample" />
                                             </a>
                                         @else
-                                            <a href="https://via.placeholder.com/1200/000000.png?text=5"
+                                            <a href="https://via.placeholder.com/1200/000000.png?text=no image"
                                                 data-toggle="lightbox" data-title="Kosong" data-gallery="gallery">
-                                                <img src="https://via.placeholder.com/300/000000?text=5"
+                                                <img src="https://via.placeholder.com/300/000000?text=no image"
                                                     class="img-fluid mb-2" alt="black sample" />
                                             </a>
                                         @endif

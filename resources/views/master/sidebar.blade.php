@@ -39,6 +39,22 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('pegawais.index') }}" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <p>
+                            Pegawai
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admins.index') }}" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <p>
+                            Staff
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item {{ request()->routeIs('users.*') ? 'active' : '' }} active">
                     <a href="{{ route('users.index') }}" class="nav-link">
                         <i class="fas fa-cog"></i>

@@ -43,9 +43,9 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="nik">NIK<span class="text-danger">*</span></label>
-                                                <input name="nik" value="{{ old('nik') }}" type="number"
-                                                    class="form-control  @error('nik') is-invalid @enderror" id="nik"
-                                                    placeholder="NIK : max 13 angka ">
+                                                <input name="nik" value="{{ old('nik') }}" type="text"
+                                                    pattern="\d+" class="form-control  @error('nik') is-invalid @enderror"
+                                                    id="nik" placeholder="nik: max 13 angka ">
                                                 @error('nik')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -55,7 +55,8 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="email">Email address</label>
+                                                <label for="email">Email address<span
+                                                        class="text-danger">*</span></label>
                                                 <input name="email" value="{{ old('email') }}" type="email"
                                                     class="form-control  @error('email') is-invalid @enderror"
                                                     id="email" placeholder="Masukan email">
@@ -66,10 +67,12 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="telpon">No. Telpon / WA</label>
-                                                <input name="telpon" value="{{ old('telpon') }}" type="number"
+                                                <label for="telpon">No. Telpon / WA<span
+                                                        class="text-danger">*</span></label>
+                                                <input name="telpon" value="{{ old('telpon') }}" type="text"
+                                                    pattern="\d+"
                                                     class="form-control  @error('telpon') is-invalid @enderror"
-                                                    id="telpon" placeholder="Masukan no telpon">
+                                                    id="telpon" placeholder="Contoh : 0813XXXXXXXX">
                                                 @error('telpon')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -178,9 +181,10 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="nip">NIP<span class="text-danger">*</span></label>
-                                                <input name="nip" value="{{ old('nip') }}" type="number"
+                                                <input name="nip" value="{{ old('nip') }}" type="text"
+                                                    pattern="\d+"
                                                     class="form-control  @error('nip') is-invalid @enderror"
-                                                    id="nip" placeholder="NIP Max 9 Angka">
+                                                    id="nip" placeholder="nip: max 9 angka">
                                                 @error('nip')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -188,7 +192,8 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="tgl_daftar">Tanggal Daftar</label>
+                                                <label for="tgl_daftar">Tanggal Daftar<span
+                                                        class="text-danger">*</span></label>
                                                 <input name="tgl_daftar" value="{{ old('tgl_daftar') }}" type="date"
                                                     class="form-control  @error('tgl_daftar') is-invalid @enderror"
                                                     id="tgl_daftar">
@@ -232,10 +237,11 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="npwp">NPWP<span class="text-danger">*</span></label>
-                                                <input name="npwp" value="{{ old('npwp') }}" type="number"
+                                                <label for="npwp">NPWP</label>
+                                                <input name="npwp" value="{{ old('npwp') }}" type="text"
+                                                    pattern="\d+"
                                                     class="form-control  @error('npwp') is-invalid @enderror"
-                                                    id="npwp" placeholder="NIP Max 9 Angka">
+                                                    id="npwp" placeholder="npwp: max 9 angka">
                                                 @error('npwp')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -358,13 +364,13 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">
-                                Simpan
-                            </button>
-                            &nbsp;
                             <a href="{{ route('pegawais.index') }}" class="btn btn-danger">
                                 Batal
                             </a>
+                            &nbsp;
+                            <button type="submit" class="btn btn-primary">
+                                Simpan
+                            </button>
                         </div>
                     </form>
                 </div>

@@ -29,14 +29,12 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title"> <a href="{{ route('pegawais.create') }}" class="btn btn-sm btn-success">
-                                    <i class="fas fa-users mr-2">+Tambah</i>
+                            <h3 class="card-title"> <a href="{{ route('pegawais.create') }}" class="btn btn-sm btn-primary"
+                                    title="Tambah">
+                                    <i class="fas fa-user mr-2">+</i>
                                 </a>
                             </h3>
-                            &nbsp;
-                            <a href="{{ route('super_admin.index') }}" class="btn btn-sm btn-danger">
-                                kembali
-                            </a>
+
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -47,7 +45,6 @@
                                         <th>Nama</th>
                                         <th>NIP</th>
                                         <th>Email</th>
-                                        {{-- <th>Kontak (No.tlp/No.hp)</th> --}}
                                         <th>Tanggal Lahir</th>
                                         <th>Agama</th>
                                         <th>Foto</th>

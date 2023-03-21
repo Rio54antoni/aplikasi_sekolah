@@ -64,26 +64,26 @@ class PegawaiController extends Controller
         // ddd($request);
         $request->validate([
             'nama' => 'required|string|max:55',
-            'nik' => 'required|string|max:16',
-            'email' => 'required|string|email|max:30|unique:users',
-            'telpon' => 'required|string|max:13',
+            'nik' => 'required|string|max:16|regex:/^\d+$/',
+            'email' => 'required|string|email|max:30|unique:pegawais',
+            'telpon' => 'required|string|max:13|regex:/^\d+$/',
             'tempat_lahir' => 'required|string|max:60',
             'tanggal_lahir' => 'required',
             'agama' => 'required',
             'sts_pernikahan' => 'required',
             'jenis_kelamin' => 'required',
             'alamat' => 'required|string|max:64',
-            'nip' => 'required|string|max:18',
+            'nip' => 'required|string|max:18|regex:/^\d+$/',
             'tgl_daftar' => 'required',
             'id_pendidikan' => 'required',
             'gelar' => 'required',
-            'npwp' => 'required|string|max:16',
+            'npwp' => 'sometimes|nullable|max:16|regex:/^\d+$/',
             'id_jabatan' => 'required',
             'id_status' => 'required',
             'foto_diri' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
             'foto_ktp' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
             'foto_ijazah' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
-            'foto_npwp' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048'
+            'foto_npwp' => 'sometimes|nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048'
         ]);
         $input = $request->all();
         // foto diri
@@ -164,20 +164,20 @@ class PegawaiController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:55',
-            'nik' => 'required|string|max:16',
-            'email' => 'required|string|email|max:30|unique:users,email,' . $id,
-            'telpon' => 'required|string|max:13',
+            'nik' => 'required|string|max:16|regex:/^\d+$/',
+            'email' => 'required|string|email|max:30|unique:pegawais,email,' . $id,
+            'telpon' => 'required|string|max:13|regex:/^\d+$/',
             'tempat_lahir' => 'required|string|max:60',
             'tanggal_lahir' => 'required',
             'agama' => 'required',
             'sts_pernikahan' => 'required',
             'jenis_kelamin' => 'required',
             'alamat' => 'required|string|max:64',
-            'nip' => 'required|string|max:18',
+            'nip' => 'required|string|max:18|regex:/^\d+$/',
             'tgl_daftar' => 'required',
             'id_pendidikan' => 'required',
             'gelar' => 'required',
-            'npwp' => 'required|string|max:16',
+            'npwp' =>  'sometimes|nullable|max:16|regex:/^\d+$/',
             'id_jabatan' => 'required',
             'id_status' => 'required',
             'foto_diri' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
