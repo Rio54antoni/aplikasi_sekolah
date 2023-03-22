@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('foto_diri');
-            $table->string('nik');
+            $table->string('nik')->unique();
             $table->string('foto_ktp')->nullable();
             $table->string('npwp')->nullable();
             $table->string('foto_npwp')->nullable();

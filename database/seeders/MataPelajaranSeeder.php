@@ -15,9 +15,9 @@ class MataPelajaranSeeder extends Seeder
     {
         $data = [
             ['nama' => 'Matematika', 'id_guru' => 1],
-            ['nama' => 'Fisika', 'id_guru' => 2],
-            ['nama' => 'Biologi', 'id_guru' => 3],
-            ['nama' => 'Sejarah', 'id_guru' => 4],
+            ['nama' => 'Fisika', 'id_guru' => 1],
+            ['nama' => 'Biologi', 'id_guru' => 1],
+            ['nama' => 'Sejarah', 'id_guru' => 1],
         ];
         foreach ($data as $isi) {
             MataPelajaran::create($isi);

@@ -31,7 +31,7 @@
                         <div class="card-header">
                             <h3 class="card-title"> <a href="{{ route('pegawais.create') }}" class="btn btn-sm btn-primary"
                                     title="Tambah">
-                                    <i class="fas fa-user mr-2">+</i>
+                                    <i class="fas fa-user-plus mr-2"></i>
                                 </a>
                             </h3>
 

@@ -14,15 +14,22 @@ return new class extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('foto_diri');
+            $table->string('nik')->unique();
+            $table->string('foto_ktp')->nullable();
             $table->string('alamat');
-            $table->string('notelepon')->nullable();
+            $table->string('jenis_kelamin'); //Laki-laki dan Perempuan
+            $table->string('tempat_lahir');
+            $table->date('tanggal_lahir');
             $table->string('nohp');
             $table->string('email')->unique();
-            $table->string('id_jk');
-            $table->date('tgl_lahir');
             $table->string('id_agama');
-            $table->string('id_jabatan');
-            $table->string('foto')->nullable();
+            $table->string('sts_pernikahan'); //Menikah dan Belum menikah
+            $table->string('id_pendidikan');
+            $table->string('foto_ijazah')->nullable();
+            $table->string('id_jabatan'); //id table jabatan
+            $table->string('id_status'); //id table status
+            $table->date('tgl_daftar')->nullable();
             $table->timestamps();
         });
     }

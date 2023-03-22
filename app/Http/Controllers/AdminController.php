@@ -31,14 +31,11 @@ class AdminController extends Controller
                 </form>';
                     return $btn;
                 })
-                ->addColumn('id_jk', function ($row) {
-                    return ($row->jeniskelamin->nama);
-                })
                 ->addColumn('tgl_lahir', function ($row) {
                     return Carbon::parse($row->tgl_lahir)->isoFormat('dddd, DD MMMM YYYY');
                 })
                 ->addColumn('foto', function ($row) {
-                    return '<img src="/image/images/' . $row->foto . '" width="50" height="50" />';
+                    return '<img src="/image/images/' . $row->foto_diri . '" width="50" height="50" />';
                 })
                 ->rawColumns(['action', 'foto', 'tgl_lahir'])
                 ->make(true);
@@ -62,27 +59,55 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:25',
-            'email' => 'required|string|email|max:55|unique:users',
-            'notelepon' => 'required|string|max:13',
-            'nohp' => 'required|string|max:13',
-            'alamat' => 'required',
+            'nama' => 'required|string|max:55',
+            'nik' => 'required|string|max:16|regex:/^\d+$/',
+            'email' => 'required|string|email|max:30|unique:pegawais',
+            'nohp' => 'required|string|max:13|regex:/^\d+$/',
+            'tempat_lahir' => 'required|string|max:60',
+            'tanggal_lahir' => 'required',
             'id_agama' => 'required',
+            'sts_pernikahan' => 'required',
+            'jenis_kelamin' => 'required',
+            'alamat' => 'required|string|max:64',
+            'tgl_daftar' => 'required',
+            'id_pendidikan' => 'required',
             'id_jabatan' => 'required',
-            'id_jk' => 'required',
-            'tgl_lahir' => 'required',
-            'foto' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048'
+            'id_status' => 'required',
+            'foto_diri' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'foto_ktp' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'foto_ijazah' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048'
+
         ]);
         $input = $request->all();
-        if ($foto = $request->file('foto')) {
+        // foto diri
+        if ($fotoDiri = $request->file('foto_diri')) {
             $destinationPath = 'image/';
-            $profileimage = date('YmdHis') . "." . $foto->getClientOriginalExtension();
-            $image = Image::make($foto)->resize(300, 300)->save('image/images/' . $profileimage);
-            // $image->save(public_path($destinationPath . $profileimage));
-            $foto->move($destinationPath, $profileimage);
-            $input['foto'] = "$profileimage";
+            $profileimageDiri = date('YmdHis') . "_sdiri." . $fotoDiri->getClientOriginalExtension();
+            $imageDiri = Image::make($fotoDiri)->resize(300, 300)->save('image/images/' . $profileimageDiri);
+            $fotoDiri->move($destinationPath, $profileimageDiri);
+            $input['foto_diri'] = $profileimageDiri;
         } else {
-            $input['foto'] = null;
+            $input['foto_ktp'] = null;
+        }
+        // foto ktp
+        if ($fotoKtp = $request->file('foto_ktp')) {
+            $destinationPath = 'image/';
+            $profileimageKtp = date('YmdHis') . "_sktp." . $fotoKtp->getClientOriginalExtension();
+            Image::make($fotoKtp)->resize(300, 300)->save('image/images/' . $profileimageKtp);
+            $fotoKtp->move($destinationPath, $profileimageKtp);
+            $input['foto_ktp'] = $profileimageKtp;
+        } else {
+            $input['foto_ktp'] = null;
+        }
+        // foto ijazah
+        if ($fotoIjazah = $request->file('foto_ijazah')) {
+            $destinationPath = 'image/';
+            $profileimageIjazah = date('YmdHis') . "_sijazah." . $fotoIjazah->getClientOriginalExtension();
+            Image::make($fotoIjazah)->resize(300, 300)->save('image/images/' . $profileimageIjazah);
+            $fotoIjazah->move($destinationPath, $profileimageIjazah);
+            $input['foto_ijazah'] = $profileimageIjazah;
+        } else {
+            $input['foto_ijazah'] = null;
         }
         try {
             Admin::create($input);
@@ -110,9 +135,8 @@ class AdminController extends Controller
     {
         $agama = Agama::all();
         $jabatan = Jabatan::all();
-        $jk = Jenisk::all();
         $data = Admin::findOrFail($id);
-        return view('super_admin.staff.edit', compact('data', 'agama', 'jabatan', 'jk'));
+        return view('super_admin.staff.edit', compact('data', 'agama', 'jabatan'));
     }
 
     /**
@@ -121,40 +145,62 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama' => 'required|string|max:25',
-            'alamat' => 'required',
-            'notelepon' => 'required|string|max:13',
-            'nohp' => 'required|string|max:13',
-            'email' => 'required|string|email|max:55|unique:users,email,' . $id,
+            'nama' => 'required|string|max:55',
+            'nik' => 'required|string|max:16|regex:/^\d+$/',
+            'email' => 'required|string|email|max:30|unique:admins,email,' . $id,
+            'nohp' => 'required|string|max:13|regex:/^\d+$/',
+            'tempat_lahir' => 'required|string|max:60',
+            'tanggal_lahir' => 'required',
             'id_agama' => 'required',
+            'sts_pernikahan' => 'required',
+            'jenis_kelamin' => 'required',
+            'alamat' => 'required|string|max:64',
+            'tgl_daftar' => 'required',
+            'id_pendidikan' => 'required',
             'id_jabatan' => 'required',
-            'id_jk' => 'required',
-            'tgl_lahir' => 'required',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ], [
-            'nama.required' => 'Nama user tidak boleh kosong',
-            'email.required' => 'Email tidak boleh kosong',
-            'foto.required' => 'Format file tidak didukung'
+            'id_status' => 'required',
+            'foto_diri' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'foto_ktp' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'foto_ijazah' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048'
         ]);
         $user = Admin::findOrFail($id);
-        if ($foto = $request->file('foto')) {
+        if ($fotoDiri = $request->file('foto_diri')) {
             $destinationPath = 'image/';
-            $profileimage = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
-            $image = Image::make($foto)->resize(300, 200,)->save('image/images/' . $profileimage);
-            // Menyimpan gambar yang sudah diubah ukurannya ke folder tujuan
-            // $image->save(public_path($destinationPath . $profileimage));
-            $foto->move($destinationPath, $profileimage);
-            $user['foto'] = "$profileimage";
+            $profileimageDiri = date('YmdHis') . "_sdiri." . $fotoDiri->getClientOriginalExtension();
+            $imageDiri = Image::make($fotoDiri)->resize(300, 300)->save('image/images/' . $profileimageDiri);
+            $fotoDiri->move($destinationPath, $profileimageDiri);
+            $user['foto_diri'] = $profileimageDiri;
+        }
+        // foto ktp
+        if ($fotoKtp = $request->file('foto_ktp')) {
+            $destinationPath = 'image/';
+            $profileimageKtp = date('YmdHis') . "_sktp." . $fotoKtp->getClientOriginalExtension();
+            Image::make($fotoKtp)->resize(300, 300)->save('image/images/' . $profileimageKtp);
+            $fotoKtp->move($destinationPath, $profileimageKtp);
+            $user['foto_ktp'] = $profileimageKtp;
+        }
+        // foto ijazah
+        if ($fotoIjazah = $request->file('foto_ijazah')) {
+            $destinationPath = 'image/';
+            $profileimageIjazah = date('YmdHis') . "_sijazah." . $fotoIjazah->getClientOriginalExtension();
+            Image::make($fotoIjazah)->resize(300, 300)->save('image/images/' . $profileimageIjazah);
+            $fotoIjazah->move($destinationPath, $profileimageIjazah);
+            $user['foto_ijazah'] = $profileimageIjazah;
         }
         $user->nama = $request->nama;
-        $user->alamat = $request->alamat;
-        $user->notelepon = $request->notelepon;
-        $user->nohp = $request->nohp;
+        $user->nik = $request->nik;
         $user->email = $request->email;
+        $user->nohp = $request->nohp;
+        $user->tempat_lahir = $request->tempat_lahir;
+        $user->tanggal_lahir = $request->tanggal_lahir;
         $user->id_agama = $request->id_agama;
+        $user->sts_pernikahan = $request->sts_pernikahan;
+        $user->jenis_kelamin = $request->jenis_kelamin;
+        $user->alamat = $request->alamat;
+        $user->tgl_daftar = $request->tgl_daftar;
+        $user->id_pendidikan = $request->id_pendidikan;
         $user->id_jabatan = $request->id_jabatan;
-        $user->id_jk = $request->id_jk;
-        $user->tgl_lahir = $request->tgl_lahir;
+        $user->id_status = $request->id_status;
         $user->save();
         return redirect()->route('admins.index')
             ->with('success', 'Data Berhasil Di Perbaharui');

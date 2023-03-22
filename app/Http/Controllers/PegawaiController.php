@@ -89,7 +89,7 @@ class PegawaiController extends Controller
         // foto diri
         if ($fotoDiri = $request->file('foto_diri')) {
             $destinationPath = 'image/';
-            $profileimageDiri = date('YmdHis') . "_diri." . $fotoDiri->getClientOriginalExtension();
+            $profileimageDiri = date('YmdHis') . "_pdiri." . $fotoDiri->getClientOriginalExtension();
             $imageDiri = Image::make($fotoDiri)->resize(300, 300)->save('image/images/' . $profileimageDiri);
             $fotoDiri->move($destinationPath, $profileimageDiri);
             $input['foto_diri'] = $profileimageDiri;
@@ -99,7 +99,7 @@ class PegawaiController extends Controller
         // foto ktp
         if ($fotoKtp = $request->file('foto_ktp')) {
             $destinationPath = 'image/';
-            $profileimageKtp = date('YmdHis') . "_ktp." . $fotoKtp->getClientOriginalExtension();
+            $profileimageKtp = date('YmdHis') . "_pktp." . $fotoKtp->getClientOriginalExtension();
             Image::make($fotoKtp)->resize(300, 300)->save('image/images/' . $profileimageKtp);
             $fotoKtp->move($destinationPath, $profileimageKtp);
             $input['foto_ktp'] = $profileimageKtp;
@@ -109,7 +109,7 @@ class PegawaiController extends Controller
         // foto ijazah
         if ($fotoIjazah = $request->file('foto_ijazah')) {
             $destinationPath = 'image/';
-            $profileimageIjazah = date('YmdHis') . "_ijazah." . $fotoIjazah->getClientOriginalExtension();
+            $profileimageIjazah = date('YmdHis') . "_pijazah." . $fotoIjazah->getClientOriginalExtension();
             Image::make($fotoIjazah)->resize(300, 300)->save('image/images/' . $profileimageIjazah);
             $fotoIjazah->move($destinationPath, $profileimageIjazah);
             $input['foto_ijazah'] = $profileimageIjazah;
@@ -119,7 +119,7 @@ class PegawaiController extends Controller
         // foto npwp
         if ($fotoNpwp = $request->file('foto_npwp')) {
             $destinationPath = 'image/';
-            $profileimageNpwp = date('YmdHis') . "_npwp." . $fotoNpwp->getClientOriginalExtension();
+            $profileimageNpwp = date('YmdHis') . "_pnpwp." . $fotoNpwp->getClientOriginalExtension();
             Image::make($fotoNpwp)->resize(300, 300)->save('image/images/' . $profileimageNpwp);
             $fotoNpwp->move($destinationPath, $profileimageNpwp);
             $input['foto_npwp'] = $profileimageNpwp;
