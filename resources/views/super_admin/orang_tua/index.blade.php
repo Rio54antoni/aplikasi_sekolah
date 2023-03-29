@@ -8,19 +8,19 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
 @endpush
 @section('content')
     @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert" data-bs-delay="5000">
-            <i class="bi bi-check-circle-fill me-2"></i>
-            {{ $message }}
-        </div>
-        <script>
-            setTimeout(function() {
-                document.querySelector('.alert').classList.add('fade');
-                document.querySelector('.alert button').click();
-            }, 5000);
-        </script>
     @endif
 
     {{-- kalau ambaik dari section lansuang blok section t paste --}}
@@ -28,17 +28,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary">
+                    <div class="card card-light">
                         <div class="card-header">
                             <h3 class="card-title"> <a href="{{ route('orangtuas.create') }}"
-                                    class="btn btn-sm btn-success">
-                                    <i class="fas fa-user-plus mr-2">Tambah</i>
+                                    class="btn btn-sm btn-primary">
+                                    <i class="fas fa-user-plus mr-2"></i>
                                 </a>
                             </h3>
-                            &nbsp;
-                            <a href="{{ route('super_admin.index') }}" class="btn btn-sm btn-secondary">
-                                kembali
-                            </a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -79,6 +75,10 @@
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    <!-- SweetAlert2 -->
+    <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <!-- Toastr -->
+    <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
     <script type="text/javascript">
         function confirmDelete() {
             if (!confirm("Yakin Ingin Menghapus Data ini ??"))
@@ -130,6 +130,26 @@
 
                 ],
                 deferRender: true
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            $('.swalDefaultSuccess').ready(function() {
+                var message = '{{ $message }}';
+                if (message) {
+                    Toast.fire({
+                        icon: 'success',
+                        title: message
+                    });
+                }
             });
         });
     </script>

@@ -20,7 +20,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary">
+                    <div class="card card-light">
                         <div class="card-header">
                             <h3 class="card-title"> <a href="{{ route('murids.create') }}" class="btn btn-sm btn-primary">
                                     <i class="fas fa-user-plus mr-2"></i>

@@ -1,6 +1,6 @@
 @extends('master.layouts')
 @section('title')
-    Data Kelas
+    Data Mata pelajaran
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -20,7 +20,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-light">
+                    <div class="card card-primary">
                         <div class="card-header">
                             <button type="button" class="btn btn-primary tambah" data-toggle="modal"><i
                                     class="fas fa-chalkboard-teacher mr-2">+</i>
@@ -29,12 +29,12 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered table-hover kelastable">
+                            <table class="table table-bordered table-hover mptable">
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Kelas</th>
-                                        <th>Wali kelas</th>
+                                        <th>Mata Pelajaran</th>
+                                        <th>Guru Pengampu</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -50,23 +50,23 @@
     </section>
 
     <!-- Modal Tambah Jadwal -->
-    <div class="modal fade" id="tambahKelasModal" tabindex="-1" role="dialog" aria-labelledby="tambahKelasModalLabel"
+    <div class="modal fade" id="tambahMpModal" tabindex="-1" role="dialog" aria-labelledby="tambahMpModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tambahKelasModalLabel"></h5>
+                    <h5 class="modal-title" id="tambahMpModalLabel"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <!-- Form Tambah Jadwal -->
-                    <form id="formTambahKelas">
+                    <form id="formTambahMp">
                         <input type="hidden" name="dataId" id="dataId" value="">
 
                         <div class="form-group">
-                            <label for="nama">Nama Kelas</label>
+                            <label for="nama">Mata Pelajaran</label>
                             <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama"
                                 name="nama" value="">
                             @error('nama')
@@ -74,16 +74,16 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="id_wali">Wali Kelas</label>
-                            <select name="id_wali" id="id_wali"
-                                class="form-control @error('id_wali') is-invalid @enderror" required>
-                                <option value="">-- Pilih wali kelas --</option>
+                            <label for="id_guru">Guru Pengampu</label>
+                            <select name="id_guru" id="id_guru"
+                                class="form-control @error('id_guru') is-invalid @enderror" required>
+                                <option value="">-- Pilih Guru --</option>
                                 @foreach ($waliklas as $p)
                                     <option value="{{ $p->id }}">{{ $p->nama }}</option>
                                 @endforeach
                             </select>
-                            @error('id_wali')
-                                <div class="invalid-feedback" id="wali_error">{{ $message }}</div>
+                            @error('id_guru')
+                                <div class="invalid-feedback" id="guru_error">{{ $message }}</div>
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -92,13 +92,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="batal">Close</button>
-                    <button type="button" class="btn btn-primary" id="btnSimpanKelas">Simpan</button>
+                    <button type="button" class="btn btn-primary" id="btnSimpanMp">Simpan</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- End Modal Tambah kelas -->
-
     <!-- MULAI MODAL KONFIRMASI DELETE-->
     <div class="modal fade" tabindex="-1" role="dialog" id="konfirmasi-modal" aria-labelledby="konfirmasi-modal"
         aria-hidden="true">
@@ -137,7 +136,7 @@
     <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('.kelastable').DataTable({
+            $('.mptable').DataTable({
                 processing: true,
                 serverSide: true,
                 "paging": true,
@@ -147,7 +146,7 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
-                ajax: "{{ route('kelas.index') }}",
+                ajax: "{{ route('mata_pelajarans.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -157,8 +156,8 @@
                         name: 'nama'
                     },
                     {
-                        data: 'id_kelas',
-                        name: 'id_kelas',
+                        data: 'id_guru',
+                        name: 'id_guru',
                         defaultContent: 'Belum di pilih'
                     },
                     {
@@ -174,32 +173,32 @@
 
             //tambah
             $(document).on('click', '.tambah', function() {
-                $('#tambahKelasModalLabel').html("Tambah Kelas Baru");
-                $('#tambahKelasModal').modal('show');
+                $('#tambahMpModalLabel').html("Tambah Mata pelajaran");
+                $('#tambahMpModal').modal('show');
 
                 $("#dataId").val('');
             });
             // batal tambah
             $(document).on('click', '#batal', function() {
                 $("#nama").val("");
-                $("#id_wali").val("");
+                $("#id_guru").val("");
                 $("#nama").removeClass('is-invalid');
                 $("#nama_error").text('');
-                $("#id_wali").removeClass('is-invalid');
-                $("#wali_error").text('');
+                $("#id_guru").removeClass('is-invalid');
+                $("#guru_error").text('');
             });
             //edit
             $(document).on('click', '.editupdate', function() {
                 var dataId = $(this).data('id');
                 // metode get berikut digunakan saat button klik berada pada controller
-                $.get("{{ route('kelas.edit', ':id') }}".replace(':id', dataId), function(data) {
-                    $('#tambahKelasModal').modal('show');
-                    $('#tambahKelasModalLabel').html("Edit Kelas");
-                    $('#btnSimpanKelas').val('update');
+                $.get("{{ route('mata_pelajarans.edit', ':id') }}".replace(':id', dataId), function(data) {
+                    $('#tambahMpModal').modal('show');
+                    $('#tambahMpModalLabel').html("Edit Mata Pelajaran");
+                    $('#btnSimpanMp').val('update');
                     // Kirim data yang di-respon ke value input dan option
                     $("#dataId").val(data.id);
                     $("#nama").val(data.nama);
-                    $("#id_wali").val(data.id_wali);
+                    $("#id_guru").val(data.id_guru);
                 })
             });
             //delete
@@ -208,15 +207,15 @@
                 $('#konfirmasi-modal').modal('show');
             });
 
-            //btnSimpanKelas
-            $('#btnSimpanKelas').click(function() {
+            //btnSimpanMp
+            $('#btnSimpanMp').click(function() {
                 var id = $('#dataId').val();
                 var nama = $('#nama').val();
-                var id_wali = $('#id_wali').val();
+                var id_guru = $('#id_guru').val();
                 var errors = [];
                 var fields = {
-                    'nama': 'Nama kelas',
-                    'id_wali': 'Harap pilih wali kelas'
+                    'nama': 'Mata Pelajaran',
+                    'id_guru': 'Harap pilih guru pengampu'
                 };
                 // Memeriksa setiap input field dan menambahkan pesan error jika kosong
                 $.each(fields, function(key, value) {
@@ -240,18 +239,18 @@
                 }
                 // jika semua data sudah diisi, kirim form
                 $.ajax({
-                    url: '{{ route('kelas.store') }}',
+                    url: '{{ route('mata_pelajarans.store') }}',
                     type: 'POST',
                     data: {
                         '_token': '{{ csrf_token() }}',
                         'id': id,
                         'nama': nama,
-                        'id_wali': id_wali
+                        'id_guru': id_guru
                     },
                     success: function(response) {
-                        $('#tambahKelasModal').modal('hide');
-                        $('#formTambahKelas')[0].reset();
-                        $('.kelastable').DataTable().ajax.reload();
+                        $('#tambahMpModal').modal('hide');
+                        $('#formTambahMp')[0].reset();
+                        $('.mptable').DataTable().ajax.reload();
                         Swal.fire({
                             icon: 'success',
                             title: 'Data berhasil disimpan',
@@ -268,7 +267,7 @@
 
             //btn tombol-hapus
             $('#tombol-hapus').click(function() {
-                var url = "kelas/" + dataId;
+                var url = "mata_pelajarans/" + dataId;
                 $.ajax({
                     url: url,
                     type: 'delete',
@@ -281,7 +280,7 @@
                     success: function(data) {
                         setTimeout(function() {
                             $('#konfirmasi-modal').modal('hide');
-                            var oTable = $('.kelastable').dataTable();
+                            var oTable = $('.mptable').dataTable();
                             oTable.fnDraw(false);
                         });
                         Swal.fire({
@@ -298,23 +297,5 @@
             });
 
         });
-        // $(document).ready(function() {
-        //     var Toast = Swal.mixin({
-        //         toast: true,
-        //         position: 'top-end',
-        //         showConfirmButton: false,
-        //         timer: 3000
-        //     });
-
-        //     $('.swalDefaultSuccess').ready(function() {
-        //         var message = '{{ $message }}';
-        //         if (message) {
-        //             Toast.fire({
-        //                 icon: 'success',
-        //                 title: message
-        //             });
-        //         }
-        //     });
-        // });
     </script>
 @endpush

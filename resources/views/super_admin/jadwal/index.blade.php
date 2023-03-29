@@ -22,18 +22,15 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title"> <a href="{{ route('jadwals.create') }}" class="btn btn-sm btn-success">
-                                    <i class="fas fa-book mr-2">Tambah</i>
-                                </a>
-                                &nbsp;
-                                <a href="{{ route('super_admin.index') }}" class="btn btn-sm btn-secondary">
-                                    kembali
+                            <h3 class="card-title"> <a href="{{ route('jadwals.create') }}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-chalkboard mr-2">+ Tambah</i>
                                 </a>
                             </h3>
                         </div>
                         <!-- /.card-header -->
 
                         <div class="card-body">
+
                             <table class="table table-bordered table-hover jadwaltable">
                                 <thead>
                                     <tr>

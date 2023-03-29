@@ -1,6 +1,6 @@
 @extends('master.layouts')
 @section('title')
-    Data Kelas
+    Data Tahun Ajaran
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -29,12 +29,12 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered table-hover kelastable">
+                            <table class="table table-bordered table-hover tahuntable">
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Kelas</th>
-                                        <th>Wali kelas</th>
+                                        <th>Tahun ajaran</th>
+                                        <th>Semester</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -50,39 +50,38 @@
     </section>
 
     <!-- Modal Tambah Jadwal -->
-    <div class="modal fade" id="tambahKelasModal" tabindex="-1" role="dialog" aria-labelledby="tambahKelasModalLabel"
+    <div class="modal fade" id="tambahTahunModal" tabindex="-1" role="dialog" aria-labelledby="tambahTahunModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tambahKelasModalLabel"></h5>
+                    <h5 class="modal-title" id="tambahTahunModalLabel"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <!-- Form Tambah Jadwal -->
-                    <form id="formTambahKelas">
+                    <form id="formTambahTahun">
                         <input type="hidden" name="dataId" id="dataId" value="">
 
                         <div class="form-group">
-                            <label for="nama">Nama Kelas</label>
-                            <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama"
-                                name="nama" value="">
-                            @error('nama')
-                                <div class="invalid-feedback" id="nama_error">{{ $message }}</div>
+                            <label for="tahun">Tahun Kelas</label>
+                            <input type="text" class="form-control @error('tahun') is-invalid @enderror" id="tahun"
+                                name="tahun" value="">
+                            @error('tahun')
+                                <div class="invalid-feedback" id="tahun_error">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="id_wali">Wali Kelas</label>
-                            <select name="id_wali" id="id_wali"
-                                class="form-control @error('id_wali') is-invalid @enderror" required>
-                                <option value="">-- Pilih wali kelas --</option>
-                                @foreach ($waliklas as $p)
-                                    <option value="{{ $p->id }}">{{ $p->nama }}</option>
-                                @endforeach
+                            <label for="semester">Semester</label>
+                            <select name="semester" id="semester"
+                                class="form-control @error('semester') is-invalid @enderror" required>
+                                <option value="">-- Pilih semester --</option>
+                                <option value="Semester Ganjil">Semester Ganjil</option>
+                                <option value="Semester Genap">Semester Genap</option>
                             </select>
-                            @error('id_wali')
+                            @error('semester')
                                 <div class="invalid-feedback" id="wali_error">{{ $message }}</div>
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -92,7 +91,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="batal">Close</button>
-                    <button type="button" class="btn btn-primary" id="btnSimpanKelas">Simpan</button>
+                    <button type="button" class="btn btn-primary" id="btnSimpanTahun">Simpan</button>
                 </div>
             </div>
         </div>
@@ -137,7 +136,7 @@
     <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('.kelastable').DataTable({
+            $('.tahuntable').DataTable({
                 processing: true,
                 serverSide: true,
                 "paging": true,
@@ -147,18 +146,18 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
-                ajax: "{{ route('kelas.index') }}",
+                ajax: "{{ route('tahuns.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                     },
                     {
-                        data: 'nama',
-                        name: 'nama'
+                        data: 'tahun',
+                        name: 'tahun'
                     },
                     {
-                        data: 'id_kelas',
-                        name: 'id_kelas',
+                        data: 'semester',
+                        name: 'semester',
                         defaultContent: 'Belum di pilih'
                     },
                     {
@@ -174,32 +173,32 @@
 
             //tambah
             $(document).on('click', '.tambah', function() {
-                $('#tambahKelasModalLabel').html("Tambah Kelas Baru");
-                $('#tambahKelasModal').modal('show');
+                $('#tambahTahunModalLabel').html("Tambah Tahun Ajaran");
+                $('#tambahTahunModal').modal('show');
 
                 $("#dataId").val('');
             });
             // batal tambah
             $(document).on('click', '#batal', function() {
-                $("#nama").val("");
-                $("#id_wali").val("");
-                $("#nama").removeClass('is-invalid');
-                $("#nama_error").text('');
-                $("#id_wali").removeClass('is-invalid');
+                $("#tahun").val("");
+                $("#semester").val("");
+                $("#tahun").removeClass('is-invalid');
+                $("#tahun_error").text('');
+                $("#semester").removeClass('is-invalid');
                 $("#wali_error").text('');
             });
             //edit
             $(document).on('click', '.editupdate', function() {
                 var dataId = $(this).data('id');
                 // metode get berikut digunakan saat button klik berada pada controller
-                $.get("{{ route('kelas.edit', ':id') }}".replace(':id', dataId), function(data) {
-                    $('#tambahKelasModal').modal('show');
-                    $('#tambahKelasModalLabel').html("Edit Kelas");
-                    $('#btnSimpanKelas').val('update');
+                $.get("{{ route('tahuns.edit', ':id') }}".replace(':id', dataId), function(data) {
+                    $('#tambahTahunModal').modal('show');
+                    $('#tambahTahunModalLabel').html("Edit Tahun Ajaran");
+                    $('#btnSimpanTahun').val('update');
                     // Kirim data yang di-respon ke value input dan option
                     $("#dataId").val(data.id);
-                    $("#nama").val(data.nama);
-                    $("#id_wali").val(data.id_wali);
+                    $("#tahun").val(data.tahun);
+                    $("#semester").val(data.semester);
                 })
             });
             //delete
@@ -208,15 +207,15 @@
                 $('#konfirmasi-modal').modal('show');
             });
 
-            //btnSimpanKelas
-            $('#btnSimpanKelas').click(function() {
+            //btnSimpanTahun
+            $('#btnSimpanTahun').click(function() {
                 var id = $('#dataId').val();
-                var nama = $('#nama').val();
-                var id_wali = $('#id_wali').val();
+                var tahun = $('#tahun').val();
+                var semester = $('#semester').val();
                 var errors = [];
                 var fields = {
-                    'nama': 'Nama kelas',
-                    'id_wali': 'Harap pilih wali kelas'
+                    'tahun': 'tahun kelas',
+                    'semester': 'Harap pilih semester'
                 };
                 // Memeriksa setiap input field dan menambahkan pesan error jika kosong
                 $.each(fields, function(key, value) {
@@ -240,18 +239,18 @@
                 }
                 // jika semua data sudah diisi, kirim form
                 $.ajax({
-                    url: '{{ route('kelas.store') }}',
+                    url: '{{ route('tahuns.store') }}',
                     type: 'POST',
                     data: {
                         '_token': '{{ csrf_token() }}',
                         'id': id,
-                        'nama': nama,
-                        'id_wali': id_wali
+                        'tahun': tahun,
+                        'semester': semester
                     },
                     success: function(response) {
-                        $('#tambahKelasModal').modal('hide');
-                        $('#formTambahKelas')[0].reset();
-                        $('.kelastable').DataTable().ajax.reload();
+                        $('#tambahTahunModal').modal('hide');
+                        $('#formTambahTahun')[0].reset();
+                        $('.tahuntable').DataTable().ajax.reload();
                         Swal.fire({
                             icon: 'success',
                             title: 'Data berhasil disimpan',
@@ -268,7 +267,7 @@
 
             //btn tombol-hapus
             $('#tombol-hapus').click(function() {
-                var url = "kelas/" + dataId;
+                var url = "tahuns/" + dataId;
                 $.ajax({
                     url: url,
                     type: 'delete',
@@ -281,7 +280,7 @@
                     success: function(data) {
                         setTimeout(function() {
                             $('#konfirmasi-modal').modal('hide');
-                            var oTable = $('.kelastable').dataTable();
+                            var oTable = $('.tahuntable').dataTable();
                             oTable.fnDraw(false);
                         });
                         Swal.fire({
@@ -298,23 +297,5 @@
             });
 
         });
-        // $(document).ready(function() {
-        //     var Toast = Swal.mixin({
-        //         toast: true,
-        //         position: 'top-end',
-        //         showConfirmButton: false,
-        //         timer: 3000
-        //     });
-
-        //     $('.swalDefaultSuccess').ready(function() {
-        //         var message = '{{ $message }}';
-        //         if (message) {
-        //             Toast.fire({
-        //                 icon: 'success',
-        //                 title: message
-        //             });
-        //         }
-        //     });
-        // });
     </script>
 @endpush

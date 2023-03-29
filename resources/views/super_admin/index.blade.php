@@ -26,6 +26,65 @@
 
     <section class="content">
         <div class="container-fluid">
+            {{-- kata sambutan --}}
+            <div class="col-mx-auto mt-4">
+                <!-- Widget: user widget style 1 -->
+                <div class="card card-widget widget-user">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-info">
+                        <h3 class="widget-user-username">SEALAMAT DATANG DI</h3>
+                        <h3 class="widget-user-username">SISTEM INFORMASI MANJEMEN SEKOLAH </h3>
+                    </div>
+                    <div class="widget-user-image">
+                        <img src="{{ asset('image/images/' . App\Models\Profilapp::first()->logo) }}"
+                            class="img-circle elevation-2 " alt="user image">
+                    </div>
+                    <div class="card-body bg-info">
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm-3 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header">{{ App\Models\Profilapp::first()->nama }}</h5>
+                                    <span class="description-text">NSS : {{ App\Models\Profilapp::first()->nss }}</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-3 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header">KONTAK</h5>
+                                    <span class="description-text">Email : {{ App\Models\Profilapp::first()->email }}</span>
+                                    <br>
+                                    <span class="description-text">No.Telepon :
+                                        {{ App\Models\Profilapp::first()->notelepon }}</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <div class="col-sm-3 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header">ALAMAT</h5>
+                                    <span class="description-text">
+                                        {{ App\Models\Profilapp::first()->alamat }}</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-3">
+                                <div class="description-block">
+                                    <h5 class="description-header">AKREDITASI</h5>
+                                    <span class="description-text">
+                                        {{ App\Models\Profilapp::first()->akreditasi }}</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                </div>
+                <!-- /.widget-user -->
+            </div>
             <!-- Small Box (Stat card) -->
             <h5 class="mb-2 mt-4">Informasi</h5>
             <div class="row">
@@ -39,7 +98,7 @@
                             </h5>
                         </div>
                         <div class="icon">
-                            <i class="fas fa-user-plus"></i>
+                            <i class="fas fa-users"></i>
                         </div>
                         <a href="{{ route('murids.index') }}" class="small-box-footer">
                             More info <i class="fas fa-arrow-circle-right"></i>
@@ -57,7 +116,7 @@
                             </h5>
                         </div>
                         <div class="icon">
-                            <i class="fas fa-user-plus"></i>
+                            <i class="fas fa-users"></i>
                         </div>
                         <a href="{{ route('pegawais.index') }}" class="small-box-footer">
                             More info <i class="fas fa-arrow-circle-right"></i>
@@ -75,7 +134,7 @@
                             </h5>
                         </div>
                         <div class="icon">
-                            <i class="fas fa-user-plus"></i>
+                            <i class="fas fa-users"></i>
                         </div>
                         <a href="{{ route('orangtuas.index') }}" class="small-box-footer">
                             More info <i class="fas fa-arrow-circle-right"></i>
@@ -93,72 +152,11 @@
                             </h5>
                         </div>
                         <div class="icon">
-                            <i class="fas fa-user-plus"></i>
+                            <i class="fas fa-users"></i>
                         </div>
                         <a href="{{ route('admins.index') }}" class="small-box-footer">
                             More info <i class="fas fa-arrow-circle-right"></i>
                         </a>
-                    </div>
-                </div>
-
-                {{-- <div class="col-lg-3 col-6">
-                    <!-- small card -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>65</h3>
-
-                            <p>User</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">
-                            More info <i class="fas fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
-                </div> --}}
-                <!-- ./col -->
-            </div>
-            <!-- /.row -->
-            <h4 class="mt-4 mb-2">Informasi Akademik</h4>
-            <div class="col-md mx-auto">
-                <!-- general form elements -->
-                <div class="card card-info">
-                    <div class="card-header">
-                        <h3 class="card-title">Jadwal Belajar</h3>
-                        <div class="d-flex justify-content-end align-items-center">
-                            <a href="{{ route('jadwals.index') }}" class="btn btn-sm btn-success">
-                                <i class="fas fa-clock mr-2">+</i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Mata Pelajaran</th>
-                                    <th>Jam Mulai</th>
-                                    <th>Jam Selesai</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                // Contoh data jadwal belajar
-                                $jadwal_belajar = [['Matematika', '08:00', '10:00'], ['Fisika', '10:00', '12:00'], ['Kimia', '13:00', '15:00']];
-                                
-                                // Loop untuk menampilkan data jadwal belajar
-                                foreach ($jadwal_belajar as $index => $jadwal) {
-                                    echo '<tr>';
-                                    echo '<td>' . ($index + 1) . '</td>';
-                                    echo '<td>' . $jadwal[0] . '</td>';
-                                    echo '<td>' . $jadwal[1] . '</td>';
-                                    echo '<td>' . $jadwal[2] . '</td>';
-                                    echo '</tr>';
-                                }
-                                ?>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>

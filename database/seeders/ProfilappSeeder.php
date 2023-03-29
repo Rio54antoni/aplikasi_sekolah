@@ -15,12 +15,19 @@ class ProfilappSeeder extends Seeder
     {
         Profilapp::create([
             'nama' => 'SMP N 3 Ulakan Tapakis',
+            'npsn' => '28175643',
             'alamat' => 'Jl.Pariaman menuju Bandara',
+            'desa' => 'Tiram Tapakis',
+            'kecamatan' => 'Ulakan Tapakis',
+            'kabupaten' => 'Padang Pariaman',
+            'provinsi' => 'Sumatera Barat',
             'email' => 'smpn3@gmail.com',
-            'notelepon' => '08567890123',
-            'nss' => '28175643',
+            'kodepos' => '27767',
+            'status' => 'Negeri',
+            'bentuk' => 'SMP',
+            'telepon' => '08567890123',
             'akreditasi' => 'A',
-            'logo' => 'sma2.jpg',
+            'logo' => 'smp3.jpg',
         ]);
     }
 }

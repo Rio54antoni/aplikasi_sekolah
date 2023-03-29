@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Profilapp extends Model
+class Tahun extends Model
 {
     use HasFactory;
-    protected $table = 'profilapps';
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected $table = 'tahuns';
+    protected $fillable = ['tahun', 'semester'];
 }

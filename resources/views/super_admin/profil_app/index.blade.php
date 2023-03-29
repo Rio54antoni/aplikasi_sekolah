@@ -24,7 +24,7 @@
                                 <div class="card-body box-profile">
                                     <div class="row">
                                         <div class="col-6">
-                                            <h3 class="card-title text-center">LOGO</h3>
+                                            <h3 class="card-title text-center">IDENTITAS SEKOLAH</h3>
                                         </div>
                                         <div class="col-6 text-right">
                                             <a href="{{ route('profilapps.edit', $data->id) }}"
@@ -34,8 +34,8 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="">
-                                        <img class="profile-user-img img-fluid img-circle img-lg"
+                                    <div class="col mb-5">
+                                        <img class="profile-user-img img-fluid img-circle img-lg "
                                             src="/image/{{ $data->logo }}">
                                     </div>
                                     <h3 class="profile-username text-center">{{ $data->nama }}</h3>

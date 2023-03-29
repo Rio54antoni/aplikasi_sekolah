@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('orangtuas', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('hubungan');
+            $table->string('hubungan')->nullable();
             $table->string('alamat');
-            $table->string('notelepon')->nullable();
             $table->string('nohp');
             $table->string('email')->unique();
             $table->string('id_kerja');

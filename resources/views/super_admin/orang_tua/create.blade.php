@@ -46,15 +46,6 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="notelepon">No. Telepon</label>
-                                <input name="notelepon" value="{{ old('notelepon') }}" type="number"
-                                    class="form-control  @error('notelepon') is-invalid @enderror" id="notelepon"
-                                    placeholder="Masukan No Telepon">
-                                @error('notelepon')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group">
                                 <label for="nohp">No. Hp</label>
                                 <input name="nohp" value="{{ old('nohp') }}" type="number"
                                     class="form-control  @error('nohp') is-invalid @enderror" id="nohp"
@@ -128,13 +119,13 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">
-                                Simpan
-                            </button>
-                            &nbsp;
                             <a href="{{ route('orangtuas.index') }}" class="btn btn-danger">
                                 Batal
                             </a>
+                            &nbsp;
+                            <button type="submit" class="btn btn-primary">
+                                Simpan
+                            </button>
                         </div>
                     </form>
                 </div>

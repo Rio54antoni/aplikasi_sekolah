@@ -15,10 +15,12 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProfilappController;
 use App\Http\Controllers\StafadmController;
 use App\Http\Controllers\SuperController;
+use App\Http\Controllers\TahunController;
 use App\Http\Controllers\UserController;
 use App\Models\Admin;
 use App\Models\Kelas;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +44,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout.index');
 //yang sesuai dengan aksesnya : 
 //akses=super
 Route::middleware(['auth', 'super_admin:admin'])->group(function () {
+
     Route::group(['prefix' => 'super-admin'], function () {
+
         Route::get('/index', [SuperController::class, 'index'])->name('super_admin.index');
         Route::resource('users', UserController::class);
         Route::resource('profilapps', ProfilappController::class);
@@ -53,6 +57,7 @@ Route::middleware(['auth', 'super_admin:admin'])->group(function () {
         Route::resource('kelas', KelasController::class);
         Route::resource('mata_pelajarans', MataPelajaranController::class);
         Route::resource('jadwals', JadwalController::class);
+        Route::resource('tahuns', TahunController::class);
     });
 });
 //akses=kepala
