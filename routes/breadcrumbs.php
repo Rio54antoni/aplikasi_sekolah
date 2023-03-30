@@ -156,37 +156,29 @@ Breadcrumbs::for('tahuns.index', function ($trail) {
     $trail->parent('super_admin.index');
     $trail->push('Tahun Ajaran', route('tahuns.index'));
 });
-// Breadcrumbs::for('tahuns.create', function ($trail) {
-//     $trail->parent('tahuns.index');
-//     $trail->push('Tambah', route('tahuns.create'));
-// });
-// $user = User::find(1);
-// Breadcrumbs::for('tahuns.show', function ($trail, $user) {
-//     $trail->parent('tahuns.index');
-//     $trail->push('Show', route('tahuns.show', $user));
-// });
-// $user = User::find(1);
-// Breadcrumbs::for('tahuns.edit', function ($trail, $user) {
-//     $trail->parent('tahuns.index');
-//     $trail->push('Edit', route('tahuns.edit', $user));
-// });
+//nilai
+Breadcrumbs::for('nilais.index', function ($trail) {
+    $trail->parent('super_admin.index');
+    $trail->push('Data Nilai', route('nilais.index'));
+});
+Breadcrumbs::for('nilais.create', function ($trail) {
+    $trail->parent('nilais.index');
+    $trail->push('Input Nilai', route('nilais.create'));
+});
+$user = User::find(1);
+Breadcrumbs::for('nilais.show', function ($trail, $user) {
+    $trail->parent('nilais.index');
+    $trail->push('Nilai Siswa', route('nilais.show', $user));
+});
+$user = User::find(1);
+Breadcrumbs::for('nilais.edit', function ($trail, $user) {
+    $trail->parent('nilais.index');
+    $trail->push('Edit Nilai', route('nilais.edit', $user));
+});
 //mata pelajaran
 Breadcrumbs::for('mata_pelajarans.index', function ($trail) {
     $trail->parent('super_admin.index');
     $trail->push('Informasi Mata Pelajaran', route('mata_pelajarans.index'));
 });
-Breadcrumbs::for('mata_pelajarans.create', function ($trail) {
-    $trail->parent('mata_pelajarans.index');
-    $trail->push('Tambah', route('mata_pelajarans.create'));
-});
-$user = User::find(1);
-Breadcrumbs::for('mata_pelajarans.show', function ($trail, $user) {
-    $trail->parent('mata_pelajarans.index');
-    $trail->push('Show', route('mata_pelajarans.show', $user));
-});
-$user = User::find(1);
-Breadcrumbs::for('mata_pelajarans.edit', function ($trail, $user) {
-    $trail->parent('mata_pelajarans.index');
-    $trail->push('Edit', route('mata_pelajarans.edit', $user));
-});
+
 //////Super admin End Menu

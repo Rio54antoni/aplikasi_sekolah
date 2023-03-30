@@ -9,6 +9,7 @@ use App\Http\Controllers\KepalaController;
 use App\Http\Controllers\MataPelajaranController;
 use App\Http\Controllers\MuridadmController;
 use App\Http\Controllers\MuridController;
+use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\OrangController;
 use App\Http\Controllers\OrangtuaController;
 use App\Http\Controllers\PegawaiController;
@@ -58,6 +59,8 @@ Route::middleware(['auth', 'super_admin:admin'])->group(function () {
         Route::resource('mata_pelajarans', MataPelajaranController::class);
         Route::resource('jadwals', JadwalController::class);
         Route::resource('tahuns', TahunController::class);
+        Route::get('/create', [NilaiController::class, 'ikelas'])->name('nilai.index');
+        Route::resource('nilais', NilaiController::class);
     });
 });
 //akses=kepala

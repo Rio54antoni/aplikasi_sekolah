@@ -116,8 +116,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('profilapps.index') }}"
-                        class="nav-link {{ request()->routeIs('profilapps.*') ? ' active' : '' }}">
+                    <a href="{{ route('nilais.index') }}"
+                        class="nav-link {{ request()->routeIs('nilais.*') ? ' active' : '' }}">
                         <i class="fas fa-cog"></i>
                         <p>
                             Data Nilai
@@ -127,7 +127,7 @@
                 <li class="nav-item">
                     <a href="{{ route('tahuns.index') }}"
                         class="nav-link {{ request()->routeIs('tahuns.*') ? ' active' : '' }}">
-                        <i class="fas fa-cog"></i>
+                        <i class="fas fa-table"></i>
                         <p>
                             Tahun Ajaran
                         </p>

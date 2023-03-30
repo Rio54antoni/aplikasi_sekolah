@@ -17,11 +17,14 @@ return new class extends Migration
             $table->string('id_mapel');
             $table->string('id_kelas');
             $table->string('id_tahun');
-            $table->string('absensi');
-            $table->string('nilai_tugas');
-            $table->string('nilai_ulangan');
-            $table->string('nilai_uts');
-            $table->string('nilai_uas');
+            $table->string('absensi')->nullable();
+            $table->string('nilai_tugas')->nullable();
+            $table->string('nilai_ulangan')->nullable();
+            $table->string('nilai_uts')->nullable();
+            $table->string('nilai_uas')->nullable();
+            $table->string('ratarata')->nullable();
+            $table->string('status_poin')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

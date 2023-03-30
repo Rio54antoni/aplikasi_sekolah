@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(PegawaiSeeder::class);
         $this->call(ProfilappSeeder::class);
+        $this->call(KelasSeeder::class);
         $this->call(AgamaSeeder::class);
         $this->call(JabatanSeeder::class);
         $this->call(KerjaSeeder::class);

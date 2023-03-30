@@ -9,19 +9,12 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 @endpush
 @section('content')
     {{-- notifikasi tindakan --}}
     @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert" data-bs-delay="5000">
-            {{ $message }}
-        </div>
-        <script>
-            setTimeout(function() {
-                document.querySelector('.alert').classList.add('fade');
-                document.querySelector('.alert button').click();
-            }, 5000);
-        </script>
     @endif
     {{-- end notifikasi --}}
     <section class="content">

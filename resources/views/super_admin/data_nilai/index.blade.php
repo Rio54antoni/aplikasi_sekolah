@@ -1,6 +1,6 @@
 @extends('master.layouts')
 @section('title')
-    Data Murid
+    Data Nilai
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -23,21 +23,21 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex justify-content-end align-items">
-                                <a href="{{ route('murids.create') }}" class="btn btn-sm btn-success">
-                                    <i class="fas fa-user-plus mr-2"></i></a>
+                                <a href="{{ route('nilais.create') }}" class="btn btn-sm btn-success">
+                                    <i class="fas fa-file">+</i></a>
                             </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered table-hover muridtable">
+                            <table class="table table-bordered table-hover nilaitable">
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
-                                        <th>NIS</th>
-                                        <th>Email</th>
-                                        <th>Tanggal Lahir</th>
-                                        <th>Foto</th>
+                                        <th>Mata Pelajaran</th>
+                                        <th>Kelas</th>
+                                        <th>Tahun Ajaran</th>
+                                        <th>Semester</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -76,40 +76,40 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('.muridtable').DataTable({
+            $('.nilaitable').DataTable({
                 processing: true,
                 serverSide: true,
                 "paging": true,
-                // "lengthChange": false,
-                // "searching": false,
+                "lengthChange": true,
+                "searching": true,
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
-                ajax: "{{ route('murids.index') }}",
+                ajax: "{{ route('nilais.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                     },
                     {
-                        data: 'nama',
-                        name: 'nama'
+                        data: 'id_siswa',
+                        name: 'id_siswa'
                     },
                     {
-                        data: 'nis',
-                        name: 'nis'
+                        data: 'id_mapel',
+                        name: 'id_mapel'
                     },
                     {
-                        data: 'email',
-                        name: 'email'
+                        data: 'id_kelas',
+                        name: 'id_kelas'
                     },
                     {
-                        data: 'tgl_lahir',
-                        name: 'tgl_lahir'
+                        data: 'id_tahun',
+                        name: 'id_tahun'
                     },
                     {
-                        data: 'foto_diri',
-                        name: 'foto_diri'
+                        data: 'semester',
+                        name: 'semester'
                     },
                     {
                         data: 'action',

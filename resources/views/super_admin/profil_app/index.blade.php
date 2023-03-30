@@ -28,7 +28,7 @@
                                         </div>
                                         <div class="col-6 text-right">
                                             <a href="{{ route('profilapps.edit', $data->id) }}"
-                                                class="btn btn-primary btn-square btn-sm">
+                                                class="btn btn-warning btn-square btn-sm">
                                                 <i class="fas fa-edit text-light">Edit</i>
                                             </a>
                                         </div>
@@ -39,23 +39,28 @@
                                             src="/image/{{ $data->logo }}">
                                     </div>
                                     <h3 class="profile-username text-center">{{ $data->nama }}</h3>
-                                    <p class="text-muted text-center"> Nomor Statistik Sekolah (NSS) :
-                                        {{ $data->nss }}</p>
+                                    <p class="text-muted text-center"> NPSN :
+                                        {{ $data->npsn }}</p>
                                     <hr>
-                                    <strong>Kontak</strong>
+                                    <strong><i class="fas fa-address-book"></i> Kontak</strong>
                                     <p>
                                     <ul>
                                         <li>
                                             Email : {{ $data->email }}
                                         </li>
                                         <li>
-                                            No.Telepon : {{ $data->notelepon }}
+                                            No.Telepon : {{ $data->telepon }}
                                         </li>
                                     </ul>
                                     </p>
                                     <hr>
                                     <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
-                                    <p>{{ $data->alamat }}</p>
+                                    <p>{{ $data->alamat }}, {{ $data->desa }}, {{ $data->kecamatan }},
+                                        {{ $data->kabupaten }}, {{ $data->provinsi }}.
+                                        <br>
+                                        <em>Kode POS :</em>
+                                        {{ $data->kodepos }}
+                                    </p>
                                     <hr>
                                     Akreditasi : <strong class="text-lg"> {{ $data->akreditasi }}
                                     </strong>

@@ -27,14 +27,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-light">
+                    <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title"> <a href="{{ route('pegawais.create') }}" class="btn btn-sm btn-primary"
-                                    title="Tambah">
-                                    <i class="fas fa-user-plus mr-2"></i>
-                                </a>
-                            </h3>
-
+                            <div class="d-flex justify-content-end align-items">
+                                <a href="{{ route('pegawais.create') }}" class="btn btn-sm btn-success">
+                                    <i class="fas fa-user-plus mr-2"></i></a>
+                            </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

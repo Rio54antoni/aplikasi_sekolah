@@ -14,7 +14,7 @@
                     <div class="col-md-4 offset-md-4">
 
                         <!-- Profile Image -->
-                        <div class="card card-primary card-outline">
+                        <div class="card card-light card-outline">
                             <div class="card-body box-profile">
                                 <div class="text-center">
                                     <img class="img img-fluid " src="/image/{{ $data->foto }}" width="100px" height="100px"
@@ -30,7 +30,7 @@
                                     </li>
                                 </ul>
 
-                                <a href="{{ route('users.index') }}" class="btn btn-primary btn-block"><b>Kembali</b></a>
+                                <a href="{{ route('users.index') }}" class="btn btn-dark btn-block"><b>Kembali</b></a>
                             </div>
                             <!-- /.card-body -->
                         </div>
