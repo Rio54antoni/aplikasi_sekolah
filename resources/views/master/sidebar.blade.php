@@ -66,7 +66,7 @@
                 <li class="nav-item ">
                     <a href="{{ route('users.index') }}"
                         class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
-                        <i class="fas fa-cog"></i>
+                        <i class="fas fa-user-plus"></i>
                         <p>
                             User Management
                         </p>
@@ -76,7 +76,7 @@
                 <li class="nav-item">
                     <a href="{{ route('profilapps.index') }}"
                         class="nav-link {{ request()->routeIs('profilapps.*') ? ' active' : '' }}">
-                        <i class="fas fa-cog"></i>
+                        <i class="fas fa-cogs"></i>
                         <p>
                             Setting APP
                         </p>
@@ -86,7 +86,7 @@
                 <li class="nav-item {{ set_expand(['jadwals.index', 'mata_pelajarans.index', 'kelas.index']) }}">
                     <a href="#"
                         class="nav-link  {{ set_active(['jadwals.index', 'mata_pelajarans.index', 'kelas.index']) }}">
-                        <i class="fas fa-book"></i>
+                        <i class="fas fa-list"></i>
                         <p>
                             Penjadwalan
                             <i class="fas fa-angle-left right"></i>
@@ -95,20 +95,20 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('jadwals.index') }}" class="nav-link {{ set_active(['jadwals.*']) }}">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far fa-calendar"></i>
                                 <p>Jadwal</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('mata_pelajarans.index') }}"
                                 class="nav-link {{ set_active(['mata_pelajarans.*']) }}">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far fa-file"></i>
                                 <p>Mata Pelajaran</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('kelas.index') }}" class="nav-link {{ set_active(['kelas.*']) }}">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-clipboard"></i>
                                 <p>Kelas</p>
                             </a>
                         </li>
@@ -118,7 +118,7 @@
                 <li class="nav-item">
                     <a href="{{ route('nilais.index') }}"
                         class="nav-link {{ request()->routeIs('nilais.*') ? ' active' : '' }}">
-                        <i class="fas fa-cog"></i>
+                        <i class="fas fa-book"></i>
                         <p>
                             Data Nilai
                         </p>
@@ -130,6 +130,14 @@
                         <i class="fas fa-table"></i>
                         <p>
                             Tahun Ajaran
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link ">
+                        <i class="fas fa-book"></i>
+                        <p>
+                            Absensi Siswa
                         </p>
                     </a>
                 </li>
