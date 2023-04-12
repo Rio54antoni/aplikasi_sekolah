@@ -31,7 +31,7 @@
                 <!-- Widget: user widget style 1 -->
                 <div class="card card-widget widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="widget-user-header bg-info">
+                    <div class="widget-user-header bg-primary">
                         <h3 class="widget-user-username">SEALAMAT DATANG DI</h3>
                         <h3 class="widget-user-username">SISTEM INFORMASI MANJEMEN SEKOLAH </h3>
                     </div>
@@ -39,7 +39,7 @@
                         <img src="{{ asset('image/images/' . App\Models\Profilapp::first()->logo) }}"
                             class="img-circle elevation-2 " alt="user image">
                     </div>
-                    <div class="card-body bg-info">
+                    <div class="card-body bg-primary">
                     </div>
                     <div class="card-footer">
                         <div class="row">
@@ -108,7 +108,7 @@
                 <!-- ./col -->
                 <div class="col-lg-3 col-6">
                     <!-- small card -->
-                    <div class="small-box bg-success">
+                    <div class="small-box bg-info">
                         <div class="inner">
                             <h3>Pegawai</h3>
                             <h5>
@@ -126,7 +126,7 @@
                 <!-- ./col -->
                 <div class="col-lg-3 col-6">
                     <!-- small card -->
-                    <div class="small-box bg-secondary">
+                    <div class="small-box bg-info">
                         <div class="inner">
                             <h3>Orang tua</h3>
                             <h5>
@@ -144,7 +144,7 @@
                 <!-- ./col -->
                 <div class="col-lg-3 col-6">
                     <!-- small card -->
-                    <div class="small-box bg-warning">
+                    <div class="small-box bg-info">
                         <div class="inner">
                             <h3>Staff</h3>
                             <h5>

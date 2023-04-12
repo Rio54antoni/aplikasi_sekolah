@@ -32,6 +32,14 @@ Breadcrumbs::for('murids.index', function ($trail) {
     $trail->parent('super_admin.index');
     $trail->push('Data Murid', route('murids.index'));
 });
+Breadcrumbs::for('rekapsiswa.index', function ($trail) {
+    $trail->parent('super_admin.index');
+    $trail->push('Rekap Data Siswa', route('rekapsiswa.index'));
+});
+Breadcrumbs::for('exportrekappdf.index', function ($trail) {
+    $trail->parent('super_admin.index');
+    $trail->push('Rekap Siswa', route('exportrekappdf.index'));
+});
 Breadcrumbs::for('murids.create', function ($trail) {
     $trail->parent('murids.index');
     $trail->push('Tambah', route('murids.create'));

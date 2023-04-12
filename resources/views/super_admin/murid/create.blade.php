@@ -19,7 +19,7 @@
     <section class="content">
         <div class="row">
             <div class="col-10 mx-auto">
-                <div class="card card-primary">
+                <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title">Form Input Data Murid</h3>
                     </div>

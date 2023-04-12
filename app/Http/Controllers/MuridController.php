@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Agama;
-use App\Models\Jenisk;
 use App\Models\Kerja;
 use App\Models\Murid;
-use Carbon\Carbon;
-use Intervention\Image\Facades\Image;
+use App\Models\Jenisk;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+use App\Exports\MuridsExport;
+use App\Exports\MuridsExportPer;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+use Intervention\Image\Facades\Image;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class MuridController extends Controller
 {
@@ -189,5 +194,60 @@ class MuridController extends Controller
         $data->delete();
         return redirect()->route('murids.index')
             ->with('success', 'Data berhasil dihapus ');
+    }
+
+    public function exportPdf()
+    {
+        $data = Murid::all();
+
+        $pdf = FacadePdf::loadview('super_admin.murid.rekapsiswa', ['data' => $data])->setPaper('a4', 'landscape');
+        return $pdf->stream();
+    }
+    public function exportPdfPer(Request $request)
+    {
+        $from = $request->input('from');
+        $to = $request->input('to');
+
+        $data = Murid::whereBetween('tgl_daftar', [$from, $to])->latest()->get();
+
+        $pdf = FacadePdf::loadView('super_admin.murid.rekapsiswa', ['data' => $data])->setPaper('a4', 'landscape');
+
+        return $pdf->stream();
+    }
+
+    // public function exportPdfId($id)
+    // {
+    //     $data = Murid::findOrFail($id);
+
+    //     $pdf = PDF::loadView('pdf', compact('data'));
+
+    //     return $pdf->download('data-muridid.pdf');
+    // }
+    public function rekap(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Murid::select('*')->get();
+            return DataTables::of($data)->builder()
+                ->columns($this->getColumns())
+                ->parameters([
+                    'buttons' => ['excel', 'pdf'],
+
+                ]);
+        }
+        return view('super_admin.murid.rekaps');
+    }
+
+    public function exportExcel()
+    {
+        // return Excel::download(new MuridsExport, 'datamurid-' . Carbon::now()->timestamp . '.xlsx');
+        return (new MuridsExport)->download('datamurid-' . Carbon::now()->timestamp . '.xlsx');
+    }
+    public function exportExcelPer(Request $request)
+    {
+        $from = $request->input('from');
+        $to = $request->input('to');
+
+        // return Excel::download(new MuridsExportPer($from, $to), 'datamurid-' . Carbon::now()->timestamp . '.xlsx');
+        return (new MuridsExportPer($from, $to))->download('datamurid-' . Carbon::now()->timestamp . '.xlsx');
     }
 }

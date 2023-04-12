@@ -1,0 +1,64 @@
+<?php
+
+namespace App\Exports;
+
+use App\Models\Murid;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\FromCollection;
+
+class MuridsExport implements FromQuery, WithHeadings, WithMapping
+{
+    use Exportable;
+
+    public function query()
+    {
+        return Murid::query();
+    }
+
+    public function headings(): array
+    {
+        return [
+            'No',
+            'Nama',
+            'Jenis Kelamin',
+            'Tempat Lahir',
+            'Tanggal Lahir',
+            'Agama',
+            'Alamat',
+            'NIS',
+            'No HP',
+            'Email',
+            'Nama Ayah',
+            'Pekerjaan Ayah',
+            'Nama Ibu',
+            'Pekerjaan Ibu',
+            'No HP Orang Tua',
+            'Tanggal Daftar'
+        ];
+    }
+    public function map($murid): array
+    {
+        static $no = 1;
+        return [
+            $no++,
+            $murid->nama,
+            $murid->jenis_kelamin,
+            $murid->tempat_lahir,
+            $murid->tgl_lahir,
+            $murid->agama->nama,
+            $murid->alamat,
+            $murid->nis,
+            $murid->nohp,
+            $murid->email,
+            $murid->ayah,
+            $murid->pekerjaan_ayah->nama,
+            $murid->ibu,
+            $murid->pekerjaan_ibu->nama,
+            $murid->nohp_ortu,
+            $murid->tgl_daftar,
+        ];
+    }
+}

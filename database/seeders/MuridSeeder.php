@@ -12,6 +12,6 @@ class MuridSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        \App\Models\Murid::factory(100)->create();
     }
 }

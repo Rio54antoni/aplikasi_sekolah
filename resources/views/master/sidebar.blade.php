@@ -1,28 +1,25 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
-    <a class="brand-link text-center">
-        SIM - SEKOLAH
+    <a href="index3.html" class="brand-link text-center">
+        <span class="brand-text font-weight-light">SIM - SEKOLAH</span>
     </a>
+
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        {{-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img src="{{ asset('image/images/' . App\Models\Profilapp::first()->logo) }}"
                     class="img-circle elevation-2 " alt="user image">
             </div>
             <div class="info">
-                <a class="d-block"> {{ App\Models\Profilapp::first()->nama }}</a>
+                <p class="d-block"> {{ App\Models\Profilapp::first()->nama }}</p>
             </div>
-        </div>
+        </div> --}}
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
-                <div class="info">
-                    <a class="d-block">-- Main Menu --</a>
-                </div>
-
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-header">-- Main Menu --</li>
                 <li class="nav-item">
                     <a href="{{ route('super_admin.index') }}"
                         class="nav-link {{ request()->routeIs('super_admin.index') ? ' active' : '' }}">
@@ -33,16 +30,29 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('murids.index') }}"
-                        class="nav-link {{ request()->routeIs('murids.*') ? ' active' : '' }}">
+                <li class="nav-item {{ set_expand(['murids.index']) }}">
+                    <a href="#" class="nav-link  {{ set_active(['murids.index']) }}">
                         <i class="fas fa-users"></i>
                         <p>
                             Siswa
+                            <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('murids.index') }}" class="nav-link {{ set_active(['murids.*']) }}">
+                                <i class="far fa-book"></i>
+                                <p>Data Siswa</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('rekapsiswa.index') }}" class="nav-link">
+                                <i class="far fa-file"></i>
+                                <p>Rekap Siswa</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-
                 <li class="nav-item">
                     <a href="{{ route('pegawais.index') }}"
                         class="nav-link {{ request()->routeIs('pegawais.*') ? ' active' : '' }}">

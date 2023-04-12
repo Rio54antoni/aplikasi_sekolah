@@ -59,6 +59,11 @@ Route::middleware(['auth', 'super_admin:admin'])->group(function () {
         Route::resource('mata_pelajarans', MataPelajaranController::class);
         Route::resource('jadwals', JadwalController::class);
         Route::resource('tahuns', TahunController::class);
+        Route::get('/rekap', [MuridController::class, 'rekap'])->name('rekapsiswa.index');
+        Route::get('/rekap/cetak_pdf', [MuridController::class, 'exportPdf'])->name('exportrekappdf.index');
+        Route::post('/rekap/cetak_pdf_per', [MuridController::class, 'exportPdfPer'])->name('exportpdfper.index');
+        Route::get('/rekap/cetak_excel', [MuridController::class, 'exportExcel'])->name('exportexcel.index');
+        Route::post('/rekap/cetak_excel_per', [MuridController::class, 'exportExcelPer'])->name('exportexcelper.index');
         Route::get('/create', [NilaiController::class, 'ikelas'])->name('nilai.index');
         Route::resource('nilais', NilaiController::class);
     });

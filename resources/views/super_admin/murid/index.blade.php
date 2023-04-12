@@ -8,6 +8,7 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 @endpush
@@ -22,6 +23,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
+                            <a href="{{ route('exportrekappdf.index') }}" class="btn btn-success mb-4">Export PDF</a>
+                            &nbsp;
+                            <a href="{{ route('exportexcel.index') }}" class="btn btn-success mb-4">Export Excel</a>
                             <div class="d-flex justify-content-end align-items">
                                 <a href="{{ route('murids.create') }}" class="btn btn-sm btn-success">
                                     <i class="fas fa-user-plus mr-2"></i></a>
@@ -29,7 +33,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered table-hover muridtable">
+                            <table id="muridtable" class="table table-bordered table-hover muridtable">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -45,7 +49,6 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
                 </div>
             </div>
             <!-- /.row -->
@@ -80,8 +83,8 @@
                 processing: true,
                 serverSide: true,
                 "paging": true,
-                // "lengthChange": false,
-                // "searching": false,
+                "lengthChange": false,
+                "searching": true,
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,
@@ -122,6 +125,7 @@
                 ],
                 deferRender: true
             });
+
             $(document).ready(function() {
                 var Toast = Swal.mixin({
                     toast: true,
@@ -129,7 +133,6 @@
                     showConfirmButton: false,
                     timer: 3000
                 });
-
                 $('.swalDefaultSuccess').ready(function() {
                     var message = '{{ $message }}';
                     if (message) {

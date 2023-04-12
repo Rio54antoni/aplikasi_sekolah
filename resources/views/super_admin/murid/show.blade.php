@@ -20,7 +20,7 @@
     <section class="content">
         <div class="row">
             <div class="col-md-6">
-                <div class="card card-primary">
+                <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title">Form Detail Data</h3>
                         <div class="card-tools">
@@ -108,7 +108,7 @@
                 <!-- /.card -->
             </div>
             <div class="col-md-6">
-                <div class="card card-warning">
+                <div class="card card-primary card-outline">
                     <div class="card-header float-center">
                         <h3 class="card-title">Foto {{ $data->nama }}</h3>
                     </div>
