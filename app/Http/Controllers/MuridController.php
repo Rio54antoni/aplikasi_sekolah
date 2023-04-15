@@ -16,12 +16,23 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Intervention\Image\Facades\Image;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 class MuridController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    // public function generateQrCode($nis)
+    // {
+    //     $murid = Murid::where('nis', $nis)->first();
+    //     $qrCode = QrCode::size(200)->generate(route('murids.show', $murid));
+    //     return view('super_admin.murid.show', compact('qrCode', 'murid'));
+    // }
+
+
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -86,6 +97,15 @@ class MuridController extends Controller
         ]);
 
         $input = $request->all();
+        //generate nis menjadi qrcode
+        if ($code = $request->input('nis')) {
+            $qrCode = QrCode::format('png')->size(100)->generate($code);
+            $fileName = $code . '.png';
+            $qrCodePath = public_path('qrcodes/' . $fileName);
+            // Simpan file QR code ke dalam direktori 'qrcodes'
+            file_put_contents($qrCodePath, $qrCode);
+        }
+        //menyimpan gambar
         if ($foto = $request->file('foto_diri')) {
             $destinationPath = 'image/';
             $profileimage = date('YmdHis') . "." . $foto->getClientOriginalExtension();
@@ -114,7 +134,8 @@ class MuridController extends Controller
     public function show($id)
     {
         $data = Murid::findOrFail($id);
-        return view('super_admin.murid.show', compact('data'));
+        $qrCode = QrCode::size(100)->generate($data->nis);
+        return view('super_admin.murid.show', compact('data', 'qrCode'));
     }
 
     /**

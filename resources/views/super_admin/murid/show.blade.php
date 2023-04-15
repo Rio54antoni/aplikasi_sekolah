@@ -30,6 +30,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
+
                                 <div class="form-group">
                                     <label for=""> Nama : </label>
                                     {{ $data->nama }}
@@ -134,6 +135,19 @@
                     </div>
                 </div>
                 <!-- /.card -->
+                <div class="card card-primary card-outline">
+                    <div class="card-header float-center">
+                        <h3>QR Code untuk {{ $data->nama }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            {{-- {!! QrCode::size(100)->generate($data->nis) !!} --}}
+                            <img src="data:image/png;base64,{{ $qrCode }}">
+                            <p>Nomor Induk Siswa: {{ $data->nis }}</p>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
             </div>
         </div>
     </section>

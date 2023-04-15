@@ -23,14 +23,15 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('exportrekappdf.index') }}" class="btn btn-success mb-4">Export PDF</a>
+                            {{-- <a href="{{ route('exportrekappdf.index') }}" class="btn btn-success mb-4">Export PDF</a>
                             &nbsp;
-                            <a href="{{ route('exportexcel.index') }}" class="btn btn-success mb-4">Export Excel</a>
+                            <a href="{{ route('exportexcel.index') }}" class="btn btn-success mb-4">Export Excel</a> --}}
                             <div class="d-flex justify-content-end align-items">
                                 <a href="{{ route('murids.create') }}" class="btn btn-sm btn-success">
                                     <i class="fas fa-user-plus mr-2"></i></a>
                             </div>
                         </div>
+
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="muridtable" class="table table-bordered table-hover muridtable">
@@ -40,7 +41,7 @@
                                         <th>Nama</th>
                                         <th>NIS</th>
                                         <th>Email</th>
-                                        <th>Tanggal Lahir</th>
+                                        {{-- <th>Tanggal Lahir</th> --}}
                                         <th>Foto</th>
                                         <th>Action</th>
                                     </tr>
@@ -106,10 +107,10 @@
                         data: 'email',
                         name: 'email'
                     },
-                    {
-                        data: 'tgl_lahir',
-                        name: 'tgl_lahir'
-                    },
+                    // {
+                    //     data: 'tgl_lahir',
+                    //     name: 'tgl_lahir'
+                    // },
                     {
                         data: 'foto_diri',
                         name: 'foto_diri'

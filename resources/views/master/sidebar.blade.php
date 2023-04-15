@@ -30,7 +30,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item {{ set_expand(['murids.index']) }}">
+                <li class="nav-item {{ set_expand(['murids.index', 'rekapsiswa.index']) }}">
                     <a href="#" class="nav-link  {{ set_active(['murids.index']) }}">
                         <i class="fas fa-users"></i>
                         <p>
@@ -41,12 +41,13 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('murids.index') }}" class="nav-link {{ set_active(['murids.*']) }}">
-                                <i class="far fa-book"></i>
+                                <i class="fas fa-book"></i>
                                 <p>Data Siswa</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('rekapsiswa.index') }}" class="nav-link">
+                            <a href="{{ route('rekapsiswa.index') }}"
+                                class="nav-link {{ set_active(['rekapsiswa.index']) }}">
                                 <i class="far fa-file"></i>
                                 <p>Rekap Siswa</p>
                             </a>
